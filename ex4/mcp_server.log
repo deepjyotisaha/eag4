@@ -1,35 +1,42 @@
-2025-04-01 15:06:11,103 - DEBUG - Initializing server 'Calculator'
-2025-04-01 15:06:11,104 - DEBUG - Registering handler for ListToolsRequest
-2025-04-01 15:06:11,104 - DEBUG - Registering handler for CallToolRequest
-2025-04-01 15:06:11,104 - DEBUG - Registering handler for ListResourcesRequest
-2025-04-01 15:06:11,104 - DEBUG - Registering handler for ReadResourceRequest
-2025-04-01 15:06:11,104 - DEBUG - Registering handler for PromptListRequest
-2025-04-01 15:06:11,104 - DEBUG - Registering handler for GetPromptRequest
-2025-04-01 15:06:11,104 - DEBUG - Registering handler for ListResourceTemplatesRequest
-2025-04-01 15:06:11,122 - DEBUG - Using proactor: IocpProactor
-2025-04-01 15:06:11,127 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
-2025-04-01 15:06:11,128 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001FD712CDD10>
-2025-04-01 15:06:11,128 - INFO - Processing request of type ListToolsRequest
-2025-04-01 15:06:11,128 - DEBUG - Dispatching request of type ListToolsRequest
-2025-04-01 15:06:11,129 - DEBUG - Response sent
-2025-04-01 15:06:13,037 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001FD712CD310>
-2025-04-01 15:06:13,037 - INFO - Processing request of type CallToolRequest
-2025-04-01 15:06:13,037 - DEBUG - Dispatching request of type CallToolRequest
-2025-04-01 15:06:13,038 - DEBUG - Response sent
-2025-04-01 15:06:15,070 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001FD711E9480>
-2025-04-01 15:06:15,070 - INFO - Processing request of type CallToolRequest
-2025-04-01 15:06:15,070 - DEBUG - Dispatching request of type CallToolRequest
-2025-04-01 15:06:15,071 - DEBUG - Response sent
-2025-04-01 15:06:15,804 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001FD711E8050>
-2025-04-01 15:06:15,804 - INFO - Processing request of type CallToolRequest
-2025-04-01 15:06:15,804 - DEBUG - Dispatching request of type CallToolRequest
-2025-04-01 15:06:16,187 - INFO - INSIDE_TOOL_CALL: open_paint() -> dict:
-2025-04-01 15:06:16,841 - DEBUG - Response sent
-2025-04-01 15:06:17,851 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001FD712BCCB0>
-2025-04-01 15:06:17,851 - INFO - Processing request of type CallToolRequest
-2025-04-01 15:06:17,851 - DEBUG - Dispatching request of type CallToolRequest
-2025-04-01 15:06:19,275 - DEBUG - Response sent
-2025-04-01 15:06:19,278 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001FD711DDD00>
-2025-04-01 15:06:19,279 - INFO - Processing request of type CallToolRequest
-2025-04-01 15:06:19,279 - DEBUG - Dispatching request of type CallToolRequest
-2025-04-01 15:06:26,177 - DEBUG - Response sent
+2025-04-01 16:26:34,365 - DEBUG - Initializing server 'Calculator'
+2025-04-01 16:26:34,366 - DEBUG - Registering handler for ListToolsRequest
+2025-04-01 16:26:34,366 - DEBUG - Registering handler for CallToolRequest
+2025-04-01 16:26:34,366 - DEBUG - Registering handler for ListResourcesRequest
+2025-04-01 16:26:34,366 - DEBUG - Registering handler for ReadResourceRequest
+2025-04-01 16:26:34,366 - DEBUG - Registering handler for PromptListRequest
+2025-04-01 16:26:34,366 - DEBUG - Registering handler for GetPromptRequest
+2025-04-01 16:26:34,366 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-04-01 16:26:34,384 - DEBUG - Using proactor: IocpProactor
+2025-04-01 16:26:34,391 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-04-01 16:26:34,392 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001C59FA81E50>
+2025-04-01 16:26:34,392 - INFO - Processing request of type ListToolsRequest
+2025-04-01 16:26:34,392 - DEBUG - Dispatching request of type ListToolsRequest
+2025-04-01 16:26:34,393 - DEBUG - Response sent
+2025-04-01 16:26:36,273 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001C59FA81450>
+2025-04-01 16:26:36,274 - INFO - Processing request of type CallToolRequest
+2025-04-01 16:26:36,274 - DEBUG - Dispatching request of type CallToolRequest
+2025-04-01 16:26:36,275 - DEBUG - Response sent
+2025-04-01 16:26:37,036 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001C59F99D480>
+2025-04-01 16:26:37,036 - INFO - Processing request of type CallToolRequest
+2025-04-01 16:26:37,036 - DEBUG - Dispatching request of type CallToolRequest
+2025-04-01 16:26:37,037 - DEBUG - Response sent
+2025-04-01 16:26:38,052 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001C59F99C050>
+2025-04-01 16:26:38,052 - INFO - Processing request of type CallToolRequest
+2025-04-01 16:26:38,053 - DEBUG - Dispatching request of type CallToolRequest
+2025-04-01 16:26:38,432 - INFO - 
+=== Opening Paint and Detecting Displays ===
+2025-04-01 16:26:38,433 - INFO - 
+==================== Display Configuration ====================
+2025-04-01 16:26:38,433 - INFO - Total number of monitors: 1
+2025-04-01 16:26:38,433 - INFO - Primary Monitor Resolution: 1920x1080
+2025-04-01 16:26:38,433 - INFO - 
+--- Virtual Screen Information ---
+2025-04-01 16:26:38,433 - INFO - Virtual Screen Area: 1920x1080
+2025-04-01 16:26:38,433 - INFO - Virtual Screen Position: Left=0, Top=0
+2025-04-01 16:26:38,433 - INFO - 
+Only one monitor detected. Opening Paint on primary monitor.
+2025-04-01 16:26:39,534 - DEBUG - Response sent
+2025-04-01 16:26:40,550 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001C59FA6CDD0>
+2025-04-01 16:26:40,550 - INFO - Processing request of type CallToolRequest
+2025-04-01 16:26:40,550 - DEBUG - Dispatching request of type CallToolRequest
+2025-04-01 16:26:41,479 - DEBUG - Response sent

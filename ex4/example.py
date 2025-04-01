@@ -8,9 +8,23 @@ import math
 import sys
 from pywinauto.application import Application
 import win32gui
+import win32api  # Add this import
 import win32con
 import time
 from win32api import GetSystemMetrics
+import logging
+
+# Configure logging at the start of your file
+logging.basicConfig(
+    #filename='mcp_server.log',
+    #filemode='w',  # 'w' means write/overwrite (instead of 'a' for append)
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+        handlers=[
+        logging.FileHandler('mcp_server.log', mode='w'),
+        logging.StreamHandler(sys.stdout)
+    ]
+)
 
 # instantiate an MCP server client
 mcp = FastMCP("Calculator")
@@ -180,7 +194,7 @@ async def draw_rectangle(x1: int, y1: int, x2: int, y2: int) -> dict:
             time.sleep(0.2)
         
         # Click on the Rectangle tool using the correct coordinates for secondary screen
-        paint_window.click_input(coords=(530, 82 ))
+        paint_window.click_input(coords=(532, 82 ))
         time.sleep(0.2)
         
         # Get the canvas area
@@ -188,9 +202,13 @@ async def draw_rectangle(x1: int, y1: int, x2: int, y2: int) -> dict:
         
         # Draw rectangle - coordinates should already be relative to the Paint window
         # No need to add primary_width since we're clicking within the Paint window
-        canvas.press_mouse_input(coords=(x1+2560, y1))
-        canvas.move_mouse_input(coords=(x2+2560, y2))
-        canvas.release_mouse_input(coords=(x2+2560, y2))
+        #canvas.press_mouse_input(coords=(x1+2560, y1))
+        #canvas.move_mouse_input(coords=(x2+2560, y2))
+        #canvas.release_mouse_input(coords=(x2+2560, y2))
+
+        canvas.press_mouse_input(coords=(x1, y1))
+        canvas.move_mouse_input(coords=(x2, y2))
+        canvas.release_mouse_input(coords=(x2, y2))
         
         return {
             "content": [
@@ -275,7 +293,7 @@ async def add_text_in_paint(text: str) -> dict:
             ]
         }
 
-@mcp.tool()
+'''@mcp.tool()
 async def open_paint() -> dict:
     """Open Microsoft Paint maximized on secondary monitor"""
     global paint_app
@@ -285,6 +303,33 @@ async def open_paint() -> dict:
         
         # Get the Paint window
         paint_window = paint_app.window(class_name='MSPaintApp')
+
+        logging.info("INSIDE_TOOL_CALL: open_paint() -> dict:")
+
+  
+        # Get information about all monitors
+        def callback(monitor, dc, rect, data):
+            monitor_info = GetMonitorInfo(monitor)
+            monitors.append({
+                'handle': monitor,
+                'rect': rect,
+                'work_area': monitor_info['Work'],
+                'is_primary': monitor_info['Flags'] & win32con.MONITORINFOF_PRIMARY != 0
+            })
+            return True
+
+        monitors = []
+        EnumDisplayMonitors(None, None, callback, None)
+
+        # Log monitor information
+        logging.info("\n=== Display Configuration ===")
+        logging.info(f"Number of monitors detected: {len(monitors)}")
+        for i, monitor in enumerate(monitors):
+            logging.info(f"\nMonitor {i+1}:")
+            logging.info(f"Is Primary: {monitor['is_primary']}")
+            logging.info(f"Resolution: {monitor['rect'][2]-monitor['rect'][0]}x{monitor['rect'][3]-monitor['rect'][1]}")
+            logging.info(f"Position: ({monitor['rect'][0]},{monitor['rect'][1]}) to ({monitor['rect'][2]},{monitor['rect'][3]})")
+            logging.info(f"Work Area: ({monitor['work_area'][0]},{monitor['work_area'][1]}) to ({monitor['work_area'][2]},{monitor['work_area'][3]})")
         
         # Get primary monitor width
         primary_width = GetSystemMetrics(0)
@@ -318,7 +363,85 @@ async def open_paint() -> dict:
                     text=f"Error opening Paint: {str(e)}"
                 )
             ]
+        }'''
+
+@mcp.tool()
+async def open_paint() -> dict:
+    """Open Microsoft Paint maximized on secondary monitor"""
+    global paint_app
+    try:
+        paint_app = Application().start('mspaint.exe')
+        time.sleep(0.2)
+        
+        # Get the Paint window
+        paint_window = paint_app.window(class_name='MSPaintApp')
+
+        logging.info("\n=== Opening Paint and Detecting Displays ===")
+
+        # Get monitor information using GetSystemMetrics
+        monitor_count = win32api.GetSystemMetrics(win32con.SM_CMONITORS)
+        primary_width = win32api.GetSystemMetrics(win32con.SM_CXSCREEN)
+        primary_height = win32api.GetSystemMetrics(win32con.SM_CYSCREEN)
+        
+        # Log monitor information
+        logging.info(f"\n{'='*20} Display Configuration {'='*20}")
+        logging.info(f"Total number of monitors: {monitor_count}")
+        logging.info(f"Primary Monitor Resolution: {primary_width}x{primary_height}")
+        
+        # Get Virtual Screen metrics (covers all monitors)
+        virtual_left = win32api.GetSystemMetrics(win32con.SM_XVIRTUALSCREEN)
+        virtual_top = win32api.GetSystemMetrics(win32con.SM_YVIRTUALSCREEN)
+        virtual_width = win32api.GetSystemMetrics(win32con.SM_CXVIRTUALSCREEN)
+        virtual_height = win32api.GetSystemMetrics(win32con.SM_CYVIRTUALSCREEN)
+        
+        logging.info("\n--- Virtual Screen Information ---")
+        logging.info(f"Virtual Screen Area: {virtual_width}x{virtual_height}")
+        logging.info(f"Virtual Screen Position: Left={virtual_left}, Top={virtual_top}")
+        
+        # If we have more than one monitor, position Paint on the second monitor
+        if monitor_count > 1:
+            # Position Paint on the second monitor (assuming it's to the right of primary)
+            target_x = primary_width + 100  # 100 pixels from left edge of second monitor
+            target_y = 100  # 100 pixels from top
+            
+            logging.info("\n--- Paint Window Positioning ---")
+            logging.info(f"Positioning Paint window at: x={target_x}, y={target_y}")
+            
+            # First move to secondary monitor without specifying size
+            win32gui.SetWindowPos(
+                paint_window.handle,
+                win32con.HWND_TOP,
+                target_x, target_y,
+                0, 0,  # Let Windows handle the size
+                win32con.SWP_NOSIZE  # Don't change the size
+            )
+        else:
+            logging.info("\nOnly one monitor detected. Opening Paint on primary monitor.")
+        
+        # Now maximize the window
+        win32gui.ShowWindow(paint_window.handle, win32con.SW_MAXIMIZE)
+        time.sleep(1)
+        
+        return {
+            "content": [
+                TextContent(
+                    type="text",
+                    text=f"Paint opened successfully. Detected {monitor_count} monitor(s). Check logs for display configuration."
+                )
+            ]
         }
+    except Exception as e:
+        logging.error(f"Error in open_paint: {str(e)}")
+        return {
+            "content": [
+                TextContent(
+                    type="text",
+                    text=f"Error opening Paint: {str(e)}"
+                )
+            ]
+        }
+    
+
 # DEFINE RESOURCES
 
 # Add a dynamic greeting resource

@@ -7,6 +7,21 @@ import asyncio
 import google.generativeai as genai
 from concurrent.futures import TimeoutError
 from functools import partial
+import logging
+import sys
+from datetime import datetime
+
+# Configure logging at the start of your file, after the imports
+logging.basicConfig(
+    #filename='mcp_client.log',
+    #filemode='a',  # append mode
+    level=logging.DEBUG,
+    format='%(asctime)s - %(levelname)s - %(message)s',
+    handlers=[
+        logging.FileHandler('mcp_client.log', mode='w'),
+        logging.StreamHandler(sys.stdout)
+    ]
+)
 
 # Load environment variables from .env file
 load_dotenv()
@@ -16,13 +31,13 @@ api_key = os.getenv('GOOGLE_API_KEY')
 if not api_key:
     raise ValueError("GOOGLE_API_KEY not found in environment variables")
 
-print("Configuring Gemini API...")
+logging.info("Configuring Gemini API...")
 try:
     genai.configure(api_key=api_key)
     model = genai.GenerativeModel('gemini-2.0-flash')
-    print("Gemini API configured successfully")
+    logging.info("Gemini API configured successfully")
 except Exception as e:
-    print(f"Error configuring Gemini API: {str(e)}")
+    logging.error(f"Error configuring Gemini API: {str(e)}")
     raise
 
 max_iterations = 3
@@ -32,7 +47,7 @@ iteration_response = []
 
 async def generate_with_timeout(prompt, timeout=10):
     """Generate content with a timeout"""
-    print("Starting LLM generation...")
+    logging.info("Starting LLM generation...")
     try:
         # Convert the synchronous generate_content call to run in a thread
         loop = asyncio.get_event_loop()
@@ -45,13 +60,13 @@ async def generate_with_timeout(prompt, timeout=10):
             ),
             timeout=timeout
         )
-        print("LLM generation completed")
+        logging.info("LLM generation completed")
         return response
     except TimeoutError:
-        print("LLM generation timed out!")
+        logging.error("LLM generation timed out!")
         raise
     except Exception as e:
-        print(f"Error in LLM generation: {e}")
+        logging.error(f"Error in LLM generation: {e}")
         raise
 
 def reset_state():
@@ -63,30 +78,30 @@ def reset_state():
 
 async def main():
     reset_state()  # Reset at the start of main
-    print("Starting main execution...")
+    logging.info("Starting main execution...")
     try:
         # Create a single MCP server connection
-        print("Establishing connection to MCP server...")
+        logging.info("Establishing connection to MCP server...")
         server_params = StdioServerParameters(
             command="python",
             args=["example.py"]
         )
 
         async with stdio_client(server_params) as (read, write):
-            print("Connection established, creating session...")
+            logging.info("Connection established, creating session...")
             async with ClientSession(read, write) as session:
-                print("Session created, initializing...")
+                logging.info("Session created, initializing...")
                 await session.initialize()
                 
                 # Get available tools
-                print("Requesting tool list...")
+                logging.info("Requesting tool list...")
                 tools_result = await session.list_tools()
                 tools = tools_result.tools
-                print(f"Successfully retrieved {len(tools)} tools")
+                logging.info(f"Successfully retrieved {len(tools)} tools")
 
                 # Create system prompt with available tools
-                print("Creating system prompt...")
-                print(f"Number of tools: {len(tools)}")
+                logging.info("Creating system prompt...")
+                logging.info(f"Number of tools: {len(tools)}")
                 
                 try:
                     # First, let's inspect what a tool object looks like
@@ -114,18 +129,18 @@ async def main():
 
                             tool_desc = f"{i+1}. {name}({params_str}) - {desc}"
                             tools_description.append(tool_desc)
-                            print(f"Added description for tool: {tool_desc}")
+                            logging.info(f"Added description for tool: {tool_desc}")
                         except Exception as e:
-                            print(f"Error processing tool {i}: {e}")
+                            logging.error(f"Error processing tool {i}: {e}")
                             tools_description.append(f"{i+1}. Error processing tool")
                     
                     tools_description = "\n".join(tools_description)
-                    print("Successfully created tools description")
+                    logging.info("Successfully created tools description")
                 except Exception as e:
-                    print(f"Error creating tools description: {e}")
+                    logging.error(f"Error creating tools description: {e}")
                     tools_description = "Error loading tools"
                 
-                print("Created system prompt...")
+                logging.info("Created system prompt...")
                 
                 system_prompt = f"""You are a math agent solving problems in iterations. You have access to various mathematical tools.
 
@@ -153,13 +168,15 @@ DO NOT include any explanations or additional text.
 Your entire response should be a single line starting with either FUNCTION_CALL: or FINAL_ANSWER:"""
 
                 query = """Find the ASCII values of characters in INDIA and then return sum of exponentials of those values. """
-                print("Starting iteration loop...")
+                logging.info("Starting iteration loop...")
+                logging.debug(f"Query: {query}")
+                logging.debug(f"System prompt: {system_prompt}")
                 
                 # Use global iteration variables
                 global iteration, last_response
                 
                 while iteration < max_iterations:
-                    print(f"\n--- Iteration {iteration + 1} ---")
+                    logging.info(f"\n--- Iteration {iteration + 1} ---")
                     if last_response is None:
                         current_query = query
                     else:
@@ -167,12 +184,13 @@ Your entire response should be a single line starting with either FUNCTION_CALL:
                         current_query = current_query + "  What should I do next?"
 
                     # Get model's response with timeout
-                    print("Preparing to generate LLM response...")
+                    logging.info("Preparing to generate LLM response...")
                     prompt = f"{system_prompt}\n\nQuery: {current_query}"
+                    logging.debug(f"Prompt: {prompt}")
                     try:
                         response = await generate_with_timeout(prompt)
                         response_text = response.text.strip()
-                        print(f"LLM Response: {response_text}")
+                        logging.info(f"LLM Response: {response_text}")
                         
                         # Find the FUNCTION_CALL line in the response
                         for line in response_text.split('\n'):
@@ -182,7 +200,7 @@ Your entire response should be a single line starting with either FUNCTION_CALL:
                                 break
                         
                     except Exception as e:
-                        print(f"Failed to get LLM response: {e}")
+                        logging.error(f"Failed to get LLM response: {e}")
                         break
 
 
@@ -191,25 +209,25 @@ Your entire response should be a single line starting with either FUNCTION_CALL:
                         parts = [p.strip() for p in function_info.split("|")]
                         func_name, params = parts[0], parts[1:]
                         
-                        print(f"\nDEBUG: Raw function info: {function_info}")
-                        print(f"DEBUG: Split parts: {parts}")
-                        print(f"DEBUG: Function name: {func_name}")
-                        print(f"DEBUG: Raw parameters: {params}")
+                        logging.info(f"\nDEBUG: Raw function info: {function_info}")
+                        logging.info(f"DEBUG: Split parts: {parts}")
+                        logging.info(f"DEBUG: Function name: {func_name}")
+                        logging.info(f"DEBUG: Raw parameters: {params}")
                         
                         try:
                             # Find the matching tool to get its input schema
                             tool = next((t for t in tools if t.name == func_name), None)
                             if not tool:
-                                print(f"DEBUG: Available tools: {[t.name for t in tools]}")
+                                logging.info(f"DEBUG: Available tools: {[t.name for t in tools]}")
                                 raise ValueError(f"Unknown tool: {func_name}")
 
-                            print(f"DEBUG: Found tool: {tool.name}")
-                            print(f"DEBUG: Tool schema: {tool.inputSchema}")
+                            logging.info(f"DEBUG: Found tool: {tool.name}")
+                            logging.info(f"DEBUG: Tool schema: {tool.inputSchema}")
 
                             # Prepare arguments according to the tool's input schema
                             arguments = {}
                             schema_properties = tool.inputSchema.get('properties', {})
-                            print(f"DEBUG: Schema properties: {schema_properties}")
+                            logging.info(f"DEBUG: Schema properties: {schema_properties}")
 
                             for param_name, param_info in schema_properties.items():
                                 if not params:  # Check if we have enough parameters
@@ -218,7 +236,7 @@ Your entire response should be a single line starting with either FUNCTION_CALL:
                                 value = params.pop(0)  # Get and remove the first parameter
                                 param_type = param_info.get('type', 'string')
                                 
-                                print(f"DEBUG: Converting parameter {param_name} with value {value} to type {param_type}")
+                                logging.info(f"DEBUG: Converting parameter {param_name} with value {value} to type {param_type}")
                                 
                                 # Convert the value to the correct type based on the schema
                                 if param_type == 'integer':
@@ -233,15 +251,15 @@ Your entire response should be a single line starting with either FUNCTION_CALL:
                                 else:
                                     arguments[param_name] = str(value)
 
-                            print(f"DEBUG: Final arguments: {arguments}")
-                            print(f"DEBUG: Calling tool {func_name}")
+                            logging.info(f"DEBUG: Final arguments: {arguments}")
+                            logging.info(f"DEBUG: Calling tool {func_name}")
                             
                             result = await session.call_tool(func_name, arguments=arguments)
-                            print(f"DEBUG: Raw result: {result}")
+                            logging.info(f"DEBUG: Raw result: {result}")
                             
                             # Get the full result content
                             if hasattr(result, 'content'):
-                                print(f"DEBUG: Result has content attribute")
+                                logging.info(f"DEBUG: Result has content attribute")
                                 # Handle multiple content items
                                 if isinstance(result.content, list):
                                     iteration_result = [
@@ -251,10 +269,10 @@ Your entire response should be a single line starting with either FUNCTION_CALL:
                                 else:
                                     iteration_result = str(result.content)
                             else:
-                                print(f"DEBUG: Result has no content attribute")
+                                logging.info(f"DEBUG: Result has no content attribute")
                                 iteration_result = str(result)
                                 
-                            print(f"DEBUG: Final iteration result: {iteration_result}")
+                            logging.info(f"DEBUG: Final iteration result: {iteration_result}")
                             
                             # Format the response based on result type
                             if isinstance(iteration_result, list):
@@ -269,17 +287,17 @@ Your entire response should be a single line starting with either FUNCTION_CALL:
                             last_response = iteration_result
 
                         except Exception as e:
-                            print(f"DEBUG: Error details: {str(e)}")
-                            print(f"DEBUG: Error type: {type(e)}")
+                            logging.error(f"DEBUG: Error details: {str(e)}")
+                            logging.error(f"DEBUG: Error type: {type(e)}")
                             import traceback
                             traceback.print_exc()
                             iteration_response.append(f"Error in iteration {iteration + 1}: {str(e)}")
                             break
 
                     elif response_text.startswith("FINAL_ANSWER:"):
-                        print("\n=== Agent Execution Complete ===")
+                        logging.info("\n=== Agent Execution Complete ===")
                         result = await session.call_tool("open_paint")
-                        print(result.content[0].text)
+                        logging.info(result.content[0].text)
 
                         # Wait longer for Paint to be fully maximized
                         await asyncio.sleep(1)
@@ -294,22 +312,22 @@ Your entire response should be a single line starting with either FUNCTION_CALL:
                                 "y2": 700
                             }
                         )
-                        print(result.content[0].text)
+                        logging.info(result.content[0].text)
 
                         # Draw rectangle and add text
-                        result = await session.call_tool(
-                            "add_text_in_paint",
-                            arguments={
-                                "text": response_text
-                            }
-                        )
-                        print(result.content[0].text)
+                        #result = await session.call_tool(
+                        #    "add_text_in_paint",
+                        #    arguments={
+                        #        "text": response_text
+                        #    }
+                        #)
+                        #logging.info(result.content[0].text)
                         break
 
                     iteration += 1
 
     except Exception as e:
-        print(f"Error in main execution: {e}")
+        logging.error(f"Error in main execution: {e}")
         import traceback
         traceback.print_exc()
     finally:
