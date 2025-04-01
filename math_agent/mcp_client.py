@@ -84,7 +84,7 @@ async def main():
         logging.info("Establishing connection to MCP server...")
         server_params = StdioServerParameters(
             command="python",
-            args=["example.py"]
+            args=["mcp_server.py"]
         )
 
         async with stdio_client(server_params) as (read, write):
@@ -314,14 +314,18 @@ Your entire response should be a single line starting with either FUNCTION_CALL:
                         )
                         logging.info(result.content[0].text)
 
-                        # Draw rectangle and add text
-                        #result = await session.call_tool(
-                        #    "add_text_in_paint",
-                        #    arguments={
-                        #        "text": response_text
-                        #    }
-                        #)
-                        #logging.info(result.content[0].text)
+                        #Draw rectangle and add text
+                        result = await session.call_tool(
+                            "add_text_in_paint",
+                            arguments={
+                                "text": response_text,
+                                "text_x": 780,
+                                "text_y": 380,
+                                "width": 200,
+                                "height": 100   
+                            }
+                        )
+                        logging.info(result.content[0].text)
                         break
 
                     iteration += 1
