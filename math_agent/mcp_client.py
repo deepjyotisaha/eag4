@@ -10,6 +10,7 @@ from functools import partial
 import logging
 import sys
 from datetime import datetime
+from config import Config
 
 # Configure logging at the start of your file, after the imports
 logging.basicConfig(
@@ -34,18 +35,18 @@ if not api_key:
 logging.info("Configuring Gemini API...")
 try:
     genai.configure(api_key=api_key)
-    model = genai.GenerativeModel('gemini-2.0-flash')
+    model = genai.GenerativeModel(Config.MODEL_NAME)
     logging.info("Gemini API configured successfully")
 except Exception as e:
     logging.error(f"Error configuring Gemini API: {str(e)}")
     raise
 
-max_iterations = 3
+max_iterations = Config.MAX_ITERATIONS
 last_response = None
 iteration = 0
 iteration_response = []
 
-async def generate_with_timeout(prompt, timeout=10):
+async def generate_with_timeout(prompt, timeout=Config.TIMEOUT_SECONDS):
     """Generate content with a timeout"""
     logging.info("Starting LLM generation...")
     try:
@@ -142,7 +143,7 @@ async def main():
                 
                 logging.info("Created system prompt...")
                 
-                system_prompt = f"""You are a math agent solving problems in iterations. You have access to various mathematical tools.
+                '''system_prompt = f"""You are a math agent solving problems in iterations. You have access to various mathematical tools.
 
 Available tools:
 {tools_description}
@@ -166,8 +167,11 @@ Examples:
 
 DO NOT include any explanations or additional text.
 Your entire response should be a single line starting with either FUNCTION_CALL: or FINAL_ANSWER:"""
+'''
+                system_prompt = Config.SYSTEM_PROMPT.format(tools_description=tools_description)
 
-                query = """Find the ASCII values of characters in INDIA and then return sum of exponentials of those values. """
+                #query = """Find the ASCII values of characters in INDIA and then return sum of exponentials of those values. """
+                query = Config.DEFAULT_QUERIES["ascii_sum"]
                 logging.info("Starting iteration loop...")
                 logging.debug(f"Query: {query}")
                 logging.debug(f"System prompt: {system_prompt}")
