@@ -143,38 +143,12 @@ async def main():
                 
                 logging.info("Created system prompt...")
                 
-                '''system_prompt = f"""You are a math agent solving problems in iterations. You have access to various mathematical tools.
-
-Available tools:
-{tools_description}
-
-You must respond with EXACTLY ONE line in one of these formats (no additional text):
-1. For function calls:
-   FUNCTION_CALL: function_name|param1|param2|...
-   
-2. For final answers:
-   FINAL_ANSWER: [number]
-
-Important:
-- When a function returns multiple values, you need to process all of them
-- Only give FINAL_ANSWER when you have completed all necessary calculations
-- Do not repeat function calls with the same parameters
-
-Examples:
-- FUNCTION_CALL: add|5|3
-- FUNCTION_CALL: strings_to_chars_to_int|INDIA
-- FINAL_ANSWER: [42]
-
-DO NOT include any explanations or additional text.
-Your entire response should be a single line starting with either FUNCTION_CALL: or FINAL_ANSWER:"""
-'''
                 system_prompt = Config.SYSTEM_PROMPT.format(tools_description=tools_description)
-
-                #query = """Find the ASCII values of characters in INDIA and then return sum of exponentials of those values. """
                 query = Config.DEFAULT_QUERIES["ascii_sum"]
+
                 logging.info("Starting iteration loop...")
-                logging.debug(f"Query: {query}")
-                logging.debug(f"System prompt: {system_prompt}")
+                #logging.debug(f"Query: {query}")
+                #logging.debug(f"System prompt: {system_prompt}")
                 
                 # Use global iteration variables
                 global iteration, last_response
@@ -190,7 +164,7 @@ Your entire response should be a single line starting with either FUNCTION_CALL:
                     # Get model's response with timeout
                     logging.info("Preparing to generate LLM response...")
                     prompt = f"{system_prompt}\n\nQuery: {current_query}"
-                    logging.debug(f"Prompt: {prompt}")
+                    #logging.debug(f"Prompt: {prompt}")
                     try:
                         response = await generate_with_timeout(prompt)
                         response_text = response.text.strip()
@@ -300,36 +274,36 @@ Your entire response should be a single line starting with either FUNCTION_CALL:
 
                     elif response_text.startswith("FINAL_ANSWER:"):
                         logging.info("\n=== Agent Execution Complete ===")
-                        result = await session.call_tool("open_paint")
-                        logging.info(result.content[0].text)
+                        #result = await session.call_tool("open_paint")
+                        #logging.info(result.content[0].text)
 
                         # Wait longer for Paint to be fully maximized
-                        await asyncio.sleep(1)
+                        #await asyncio.sleep(1)
 
                         # Draw a rectangle
-                        result = await session.call_tool(
-                            "draw_rectangle",
-                            arguments={
-                                "x1": 780,
-                                "y1": 380,
-                                "x2": 1140,
-                                "y2": 700
-                            }
-                        )
-                        logging.info(result.content[0].text)
+                        #result = await session.call_tool(
+                        #    "draw_rectangle",
+                        #    arguments={
+                        #        "x1": 780,
+                        #        "y1": 380,
+                        #        "x2": 1140,
+                        #        "y2": 700
+                        #    }
+                        #)
+                        #logging.info(result.content[0].text)
 
                         #Draw rectangle and add text
-                        result = await session.call_tool(
-                            "add_text_in_paint",
-                            arguments={
-                                "text": response_text,
-                                "text_x": 780,
-                                "text_y": 380,
-                                "width": 200,
-                                "height": 100   
-                            }
-                        )
-                        logging.info(result.content[0].text)
+                        #result = await session.call_tool(
+                        #    "add_text_in_paint",
+                        #    arguments={
+                        #        "text": response_text,
+                        #        "text_x": 780,
+                        #        "text_y": 380,
+                        #        "width": 200,
+                        #        "height": 100   
+                        #    }
+                        #)
+                        #logging.info(result.content[0].text)
                         break
 
                     iteration += 1

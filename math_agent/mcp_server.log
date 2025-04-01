@@ -1,60 +1,49 @@
-2025-04-01 17:54:26,999 - DEBUG - Initializing server 'Calculator'
-2025-04-01 17:54:26,999 - DEBUG - Registering handler for ListToolsRequest
-2025-04-01 17:54:26,999 - DEBUG - Registering handler for CallToolRequest
-2025-04-01 17:54:26,999 - DEBUG - Registering handler for ListResourcesRequest
-2025-04-01 17:54:26,999 - DEBUG - Registering handler for ReadResourceRequest
-2025-04-01 17:54:26,999 - DEBUG - Registering handler for PromptListRequest
-2025-04-01 17:54:26,999 - DEBUG - Registering handler for GetPromptRequest
-2025-04-01 17:54:26,999 - DEBUG - Registering handler for ListResourceTemplatesRequest
-2025-04-01 17:54:27,018 - DEBUG - Using proactor: IocpProactor
-2025-04-01 17:54:27,027 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
-2025-04-01 17:54:27,028 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000002C7D52B9E50>
-2025-04-01 17:54:27,028 - INFO - Processing request of type ListToolsRequest
-2025-04-01 17:54:27,028 - DEBUG - Dispatching request of type ListToolsRequest
-2025-04-01 17:54:27,031 - DEBUG - Response sent
-2025-04-01 17:54:28,935 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000002C7D52B9450>
-2025-04-01 17:54:28,935 - INFO - Processing request of type CallToolRequest
-2025-04-01 17:54:28,936 - DEBUG - Dispatching request of type CallToolRequest
-2025-04-01 17:54:28,936 - DEBUG - Response sent
-2025-04-01 17:54:29,655 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000002C7D51D1810>
-2025-04-01 17:54:29,656 - INFO - Processing request of type CallToolRequest
-2025-04-01 17:54:29,656 - DEBUG - Dispatching request of type CallToolRequest
-2025-04-01 17:54:29,656 - DEBUG - Response sent
-2025-04-01 17:54:30,734 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000002C7D51D03E0>
-2025-04-01 17:54:30,734 - INFO - Processing request of type CallToolRequest
-2025-04-01 17:54:30,734 - DEBUG - Dispatching request of type CallToolRequest
-2025-04-01 17:54:32,166 - INFO - Paint window found, verifying UI elements...
-2025-04-01 17:54:32,169 - INFO - Canvas element found and verified
-2025-04-01 17:54:32,171 - INFO - 
+2025-04-01 18:22:25,571 - DEBUG - Initializing server 'Calculator'
+2025-04-01 18:22:25,572 - DEBUG - Registering handler for ListToolsRequest
+2025-04-01 18:22:25,572 - DEBUG - Registering handler for CallToolRequest
+2025-04-01 18:22:25,572 - DEBUG - Registering handler for ListResourcesRequest
+2025-04-01 18:22:25,572 - DEBUG - Registering handler for ReadResourceRequest
+2025-04-01 18:22:25,572 - DEBUG - Registering handler for PromptListRequest
+2025-04-01 18:22:25,572 - DEBUG - Registering handler for GetPromptRequest
+2025-04-01 18:22:25,572 - DEBUG - Registering handler for ListResourceTemplatesRequest
+2025-04-01 18:22:25,602 - DEBUG - Using proactor: IocpProactor
+2025-04-01 18:22:25,611 - DEBUG - Received message: root=InitializedNotification(method='notifications/initialized', params=None, jsonrpc='2.0')
+2025-04-01 18:22:25,611 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001C5A2619E50>
+2025-04-01 18:22:25,611 - INFO - Processing request of type ListToolsRequest
+2025-04-01 18:22:25,611 - DEBUG - Dispatching request of type ListToolsRequest
+2025-04-01 18:22:25,613 - DEBUG - Response sent
+2025-04-01 18:22:27,493 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001C5A2619450>
+2025-04-01 18:22:27,493 - INFO - Processing request of type CallToolRequest
+2025-04-01 18:22:27,493 - DEBUG - Dispatching request of type CallToolRequest
+2025-04-01 18:22:27,495 - DEBUG - Response sent
+2025-04-01 18:22:28,258 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001C5A25316E0>
+2025-04-01 18:22:28,258 - INFO - Processing request of type CallToolRequest
+2025-04-01 18:22:28,258 - DEBUG - Dispatching request of type CallToolRequest
+2025-04-01 18:22:28,258 - DEBUG - Response sent
+2025-04-01 18:22:29,288 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001C5A25302B0>
+2025-04-01 18:22:29,288 - INFO - Processing request of type CallToolRequest
+2025-04-01 18:22:29,289 - DEBUG - Dispatching request of type CallToolRequest
+2025-04-01 18:22:29,762 - INFO - Paint window found, verifying UI elements...
+2025-04-01 18:22:29,770 - INFO - Canvas element found and verified
+2025-04-01 18:22:29,772 - INFO - 
 ==================== Display Configuration ====================
-2025-04-01 17:54:32,171 - INFO - Total number of monitors: 1
-2025-04-01 17:54:32,171 - INFO - Primary Monitor Resolution: 1920x1080
-2025-04-01 17:54:32,675 - INFO - Window successfully maximized
-2025-04-01 17:54:33,378 - INFO - UI elements verified and accessible
-2025-04-01 17:54:33,378 - INFO - Paint initialization complete and verified
-2025-04-01 17:54:33,379 - DEBUG - Response sent
-2025-04-01 17:54:34,392 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000002C7D52A0DD0>
-2025-04-01 17:54:34,392 - INFO - Processing request of type CallToolRequest
-2025-04-01 17:54:34,392 - DEBUG - Dispatching request of type CallToolRequest
-2025-04-01 17:54:34,393 - INFO - Starting rectangle drawing operation from (780,380) to (1140,700)
-2025-04-01 17:54:34,399 - INFO - Paint window rectangle: (-8, -8, 1928, 1040)
-2025-04-01 17:54:34,399 - INFO - Clicking rectangle tool at (532, 82)
-2025-04-01 17:54:35,526 - INFO - Canvas rectangle: (L0, T23, R0, B23)
-2025-04-01 17:54:35,527 - INFO - Canvas offsets: x=8, y=31
-2025-04-01 17:54:35,527 - INFO - Adjusted coordinates: from (788,411) to (1148,731)
-2025-04-01 17:54:37,960 - INFO - Rectangle drawing completed
-2025-04-01 17:54:37,962 - DEBUG - Response sent
-2025-04-01 17:54:37,967 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000002C7D52BC380>
-2025-04-01 17:54:37,968 - INFO - Processing request of type CallToolRequest
-2025-04-01 17:54:37,968 - DEBUG - Dispatching request of type CallToolRequest
-2025-04-01 17:54:37,968 - INFO - Starting text addition operation: 'FINAL_ANSWER: [7.59982224609308e+33]' at (780, 380)
-2025-04-01 17:54:37,978 - INFO - Paint window rectangle: (-8, -8, 1928, 1040)
-2025-04-01 17:54:37,988 - INFO - Canvas rectangle: (L0, T23, R0, B23)
-2025-04-01 17:54:37,988 - INFO - Canvas offsets: x=8, y=31
-2025-04-01 17:54:37,988 - INFO - Adjusted coordinates: (788, 411)
-2025-04-01 17:54:37,988 - INFO - Switching to selection tool
-2025-04-01 17:54:38,505 - INFO - Selecting Text tool
-2025-04-01 17:54:40,642 - INFO - Creating text box
-2025-04-01 17:54:44,065 - INFO - Typing text: FINAL_ANSWER: [7.59982224609308e+33]
-2025-04-01 17:54:50,022 - INFO - Text addition completed
-2025-04-01 17:54:50,024 - DEBUG - Response sent
+2025-04-01 18:22:29,772 - INFO - Total number of monitors: 1
+2025-04-01 18:22:29,772 - INFO - Primary Monitor Resolution: 1920x1080
+2025-04-01 18:22:30,277 - INFO - Window successfully maximized
+2025-04-01 18:22:30,983 - INFO - UI elements verified and accessible
+2025-04-01 18:22:30,983 - INFO - Paint initialization complete and verified
+2025-04-01 18:22:30,984 - DEBUG - Response sent
+2025-04-01 18:22:31,820 - DEBUG - Received message: <mcp.shared.session.RequestResponder object at 0x000001C5A26044D0>
+2025-04-01 18:22:31,820 - INFO - Processing request of type CallToolRequest
+2025-04-01 18:22:31,820 - DEBUG - Dispatching request of type CallToolRequest
+2025-04-01 18:22:31,821 - INFO - Starting text addition operation: '7.59982224609308e+33' at (100, 100)
+2025-04-01 18:22:31,833 - INFO - Paint window rectangle: (-8, -8, 1928, 1040)
+2025-04-01 18:22:31,837 - INFO - Canvas rectangle: (L0, T23, R0, B23)
+2025-04-01 18:22:31,837 - INFO - Canvas offsets: x=8, y=31
+2025-04-01 18:22:31,837 - INFO - Adjusted coordinates: (108, 131)
+2025-04-01 18:22:31,837 - INFO - Switching to selection tool
+2025-04-01 18:22:32,353 - INFO - Selecting Text tool
+2025-04-01 18:22:34,499 - INFO - Creating text box
+2025-04-01 18:22:37,904 - INFO - Typing text: 7.59982224609308e+33
+2025-04-01 18:22:41,849 - INFO - Text addition completed
+2025-04-01 18:22:41,852 - DEBUG - Response sent

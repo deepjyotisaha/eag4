@@ -382,16 +382,10 @@ async def draw_rectangle(x1: int, y1: int, x2: int, y2: int) -> dict:
         }
 
 @mcp.tool()
-async def add_text_in_paint(text: str, text_x: int, text_y: int, width: int = 200, height: int = 100) -> dict:
+async def add_text_in_paint(text: str, x: int, y: int, width: int = 200, height: int = 100) -> dict:
     """
-    Add text in Microsoft Paint at specified coordinates
+    Add text in Microsoft Paint at specified coordinates starting from (x,y) within the box of size (width, height)
     
-    Args:
-        text: The text to add
-        text_x: X coordinate for text box
-        text_y: Y coordinate for text box
-        width: Width of text box (default 200)
-        height: Height of text box (default 100)
     """
     global paint_app
     try:
@@ -405,7 +399,7 @@ async def add_text_in_paint(text: str, text_x: int, text_y: int, width: int = 20
                 ]
             }
         
-        logging.info(f"Starting text addition operation: '{text}' at ({text_x}, {text_y})")
+        logging.info(f"Starting text addition operation: '{text}' at ({x}, {y})")
         
         # Get the Paint window
         paint_window = paint_app.window(class_name='MSPaintApp')
@@ -430,8 +424,8 @@ async def add_text_in_paint(text: str, text_x: int, text_y: int, width: int = 20
         logging.info(f"Canvas offsets: x={canvas_x_offset}, y={canvas_y_offset}")
         
         # Adjust coordinates to be relative to canvas
-        adjusted_x = text_x + canvas_x_offset
-        adjusted_y = text_y + canvas_y_offset
+        adjusted_x = x + canvas_x_offset
+        adjusted_y = y + canvas_y_offset
         logging.info(f"Adjusted coordinates: ({adjusted_x}, {adjusted_y})")
         
         # First, switch to selection tool to ensure we're not in any other mode
@@ -500,7 +494,7 @@ async def add_text_in_paint(text: str, text_x: int, text_y: int, width: int = 20
             "content": [
                 TextContent(
                     type="text",
-                    text=f"Text '{text}' added successfully at ({text_x}, {text_y})"
+                    text=f"Text '{text}' added successfully at ({x}, {y})"
                 )
             ]
         }

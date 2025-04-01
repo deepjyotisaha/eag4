@@ -2,13 +2,13 @@
 
 class Config:
     # System configuration
-    MAX_ITERATIONS = 3
+    MAX_ITERATIONS = 6
     TIMEOUT_SECONDS = 10
     MODEL_NAME = 'gemini-2.0-flash'
     LOG_LEVEL = 'DEBUG'
 
     # Prompt templates
-    SYSTEM_PROMPT = """You are a math agent solving problems in iterations. You have access to various mathematical tools.
+    SYSTEM_PROMPT = """You are a math agent for visually impared individuals who can only view the result when displayed on a canvas in a formatted manner. You first solve the mathematical problems to determine the final mathematical result, you compute this in iterations and you use the mathematical tools available to you. Once you have computed the mathematical result, you display the final result on a canvas. You have access to tools to operate the canvas and format the text on the canvas.
 
 Available tools:
 {tools_description}
@@ -23,11 +23,13 @@ You must respond with EXACTLY ONE line in one of these formats (no additional te
 Important:
 - When a function returns multiple values, you need to process all of them
 - Only give FINAL_ANSWER when you have completed all necessary calculations
-- Do not repeat function calls with the same parameters
-
+- Do not repeat function calls with the same parameters at any cost
+- Only when you have computed the result of the mathematical problem, you start the process of displaying the result on a canvas
+- You must display the result on a canvas in a formatted manner
 Examples:
 - FUNCTION_CALL: add|5|3
 - FUNCTION_CALL: strings_to_chars_to_int|INDIA
+- FUNCTION_CALL: draw_rectangle|100|100|300|300
 - FINAL_ANSWER: [42]
 
 DO NOT include any explanations or additional text.
