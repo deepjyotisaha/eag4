@@ -8,7 +8,7 @@ class Config:
     LOG_LEVEL = 'DEBUG'
 
     # Prompt templates
-    SYSTEM_PROMPT = """You are a math agent for visually impared individuals who can only view the result when displayed on a canvas in a formatted manner. You first solve the mathematical problems to determine the final mathematical result, you compute this in iterations and you use the mathematical tools available to you. Once you have computed the mathematical result, you display the final result on a canvas. You have access to tools to operate the canvas and format the text on the canvas.
+    SYSTEM_PROMPT = """You are a math agent for visually impared individuals who can only view the result when displayed on a canvas in a formatted manner using a boundary box. You first solve the mathematical problems to determine the final mathematical result, you compute this in iterations and you use the mathematical tools available to you. Once you have computed the mathematical result, you display the final result on a canvas. You have access to tools to operate the canvas and format the text on the canvas.
 
 Available tools:
 {tools_description}

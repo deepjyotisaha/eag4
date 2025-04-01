@@ -274,38 +274,39 @@ async def main():
 
                     elif response_text.startswith("FINAL_ANSWER:"):
                         logging.info("\n=== Agent Execution Complete ===")
-                        #result = await session.call_tool("open_paint")
-                        #logging.info(result.content[0].text)
+                        '''
+                        result = await session.call_tool("open_paint")
+                        logging.info(result.content[0].text)
 
                         # Wait longer for Paint to be fully maximized
-                        #await asyncio.sleep(1)
+                        await asyncio.sleep(1)
 
                         # Draw a rectangle
-                        #result = await session.call_tool(
-                        #    "draw_rectangle",
-                        #    arguments={
-                        #        "x1": 780,
-                        #        "y1": 380,
-                        #        "x2": 1140,
-                        #        "y2": 700
-                        #    }
-                        #)
-                        #logging.info(result.content[0].text)
+                        result = await session.call_tool(
+                            "draw_rectangle",
+                            arguments={
+                                "x1": 780,
+                                "y1": 380,
+                                "x2": 1140,
+                                "y2": 700
+                            }
+                        )
+                        logging.info(result.content[0].text)
 
                         #Draw rectangle and add text
-                        #result = await session.call_tool(
-                        #    "add_text_in_paint",
-                        #    arguments={
-                        #        "text": response_text,
-                        #        "text_x": 780,
-                        #        "text_y": 380,
-                        #        "width": 200,
-                        #        "height": 100   
-                        #    }
-                        #)
-                        #logging.info(result.content[0].text)
+                        result = await session.call_tool(
+                            "add_text_in_paint",
+                            arguments={
+                                "text": response_text,
+                                "text_x": 780,
+                                "text_y": 380,
+                                "width": 200,
+                                "height": 100   
+                            }
+                        )
+                        logging.info(result.content[0].text)
                         break
-
+                        '''
                     iteration += 1
 
     except Exception as e:

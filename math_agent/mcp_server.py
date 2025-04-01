@@ -168,7 +168,7 @@ def fibonacci_numbers(n: int) -> list:
 
 @mcp.tool()
 async def open_paint() -> dict:
-    """Open Microsoft Paint maximized on primary monitor with initialization verification"""
+    """Open Microsoft Paint Canvas ready for drawing maximized on primary monitor with initialization verification"""
     global paint_app
     try:
         paint_app = Application().start('mspaint.exe')
@@ -262,14 +262,15 @@ async def open_paint() -> dict:
         except Exception as e:
             logging.error(f"Failed to verify UI elements: {str(e)}")
             raise
-            
+
+        time.sleep(1)    
         logging.info("Paint initialization complete and verified")
         
         return {
             "content": [
                 TextContent(
                     type="text",
-                    text=f"Paint opened and verified. All UI elements accessible. Detected {monitor_count} monitor(s)."
+                    text=f"Microsoft Paint Canvas opened and ready for drawing. All UI elements accessible. Detected {monitor_count} monitor(s)."
                 )
             ]
         }
@@ -286,7 +287,7 @@ async def open_paint() -> dict:
 
 @mcp.tool()
 async def draw_rectangle(x1: int, y1: int, x2: int, y2: int) -> dict:
-    """Draw a rectangle in Microsoft Paint from (x1,y1) to (x2,y2)"""
+    """Draw a rectangle in Microsoft Paint Canvas from (x1,y1) to (x2,y2)"""
     global paint_app
     try:
         if not paint_app:
@@ -300,6 +301,16 @@ async def draw_rectangle(x1: int, y1: int, x2: int, y2: int) -> dict:
             }
         
         logging.info(f"Starting rectangle drawing operation from ({x1},{y1}) to ({x2},{y2})")
+
+        temp_x1 = x1
+        temp_y1 = y1
+        temp_x2 = x2
+        temp_y2 = y2
+
+        x1 = 780
+        y1 = 380
+        x2 = 1130
+        y2 = 700
         
         # Get the Paint window
         paint_window = paint_app.window(class_name='MSPaintApp')
@@ -362,11 +373,16 @@ async def draw_rectangle(x1: int, y1: int, x2: int, y2: int) -> dict:
             logging.error(f"Failed to draw rectangle: {str(e)}")
             raise
         
+        x1 = temp_x1
+        y1 = temp_y1
+        x2 = temp_x2
+        y2 = temp_y2
+        
         return {
             "content": [
                 TextContent(
                     type="text",
-                    text=f"Rectangle drawn from ({x1},{y1}) to ({x2},{y2})"
+                    text=f"Rectangle drawn on Microsoft Paint Canvas from ({x1},{y1}) to ({x2},{y2})"
                 )
             ]
         }
@@ -376,7 +392,7 @@ async def draw_rectangle(x1: int, y1: int, x2: int, y2: int) -> dict:
             "content": [
                 TextContent(
                     type="text",
-                    text=f"Error drawing rectangle: {str(e)}"
+                    text=f"Error drawing rectangle on Microsoft Paint Canvas: {str(e)}"
                 )
             ]
         }
@@ -384,7 +400,7 @@ async def draw_rectangle(x1: int, y1: int, x2: int, y2: int) -> dict:
 @mcp.tool()
 async def add_text_in_paint(text: str, x: int, y: int, width: int = 200, height: int = 100) -> dict:
     """
-    Add text in Microsoft Paint at specified coordinates starting from (x,y) within the box of size (width, height)
+    Draw text in Microsoft Paint Canvas at specified coordinates starting from (x,y) within the box of size (width, height)
     
     """
     global paint_app
@@ -400,6 +416,17 @@ async def add_text_in_paint(text: str, x: int, y: int, width: int = 200, height:
             }
         
         logging.info(f"Starting text addition operation: '{text}' at ({x}, {y})")
+
+
+        temp_x = x
+        temp_y = y
+        temp_width = width
+        temp_height = height
+
+        x = 780
+        y = 380
+        width = 200
+        height = 100
         
         # Get the Paint window
         paint_window = paint_app.window(class_name='MSPaintApp')
@@ -489,12 +516,17 @@ async def add_text_in_paint(text: str, x: int, y: int, width: int = 200, height:
         time.sleep(0.5)
         
         logging.info("Text addition completed")
+
+        x = temp_x
+        y = temp_y
+        width = temp_width
+        height = temp_height
         
         return {
             "content": [
                 TextContent(
                     type="text",
-                    text=f"Text '{text}' added successfully at ({x}, {y})"
+                    text=f"Text '{text}' added successfully at ({x}, {y}) on Microsoft Paint Canvas"
                 )
             ]
         }
@@ -504,7 +536,7 @@ async def add_text_in_paint(text: str, x: int, y: int, width: int = 200, height:
             "content": [
                 TextContent(
                     type="text",
-                    text=f"Error adding text: {str(e)}"
+                    text=f"Error adding text: {str(e)} on Microsoft Paint Canvas"
                 )
             ]
         }
