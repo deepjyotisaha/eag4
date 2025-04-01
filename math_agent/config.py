@@ -2,10 +2,15 @@
 
 class Config:
     # System configuration
-    MAX_ITERATIONS = 6
+    MAX_ITERATIONS = 7
     TIMEOUT_SECONDS = 10
     MODEL_NAME = 'gemini-2.0-flash'
     LOG_LEVEL = 'DEBUG'
+    LAPTOP_MONITOR = True
+    LAPTOP_MONITOR_X_PADDING = 576
+    LAPTOP_MONITOR_Y_PADDING = 584
+    #DESKTOP_MONITOR_RESOLUTION = (1920, 1080)
+    #LAPTOP_MONITOR_RESOLUTION = (2496, 1664)
 
     # Prompt templates
     SYSTEM_PROMPT = """You are a math agent for visually impared individuals who can only view the result when displayed on a canvas in a formatted manner using a boundary box. You first solve the mathematical problems to determine the final mathematical result, you compute this in iterations and you use the mathematical tools available to you. Once you have computed the mathematical result, you display the final result on a canvas. You have access to tools to operate the canvas and format the text on the canvas.
@@ -25,7 +30,8 @@ Important:
 - Only give FINAL_ANSWER when you have completed all necessary calculations
 - Do not repeat function calls with the same parameters at any cost
 - Only when you have computed the result of the mathematical problem, you start the process of displaying the result on a canvas
-- You must display the result on a canvas in a formatted manner
+- Make sure you draw the response in the center of the canvas and format the response in such a way that the result is contained in the center of the canvas within a boundary with 30px padding on all sides
+
 Examples:
 - FUNCTION_CALL: add|5|3
 - FUNCTION_CALL: strings_to_chars_to_int|INDIA

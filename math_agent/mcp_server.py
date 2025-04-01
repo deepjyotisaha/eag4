@@ -13,13 +13,14 @@ import win32con
 import time
 from win32api import GetSystemMetrics
 import logging
+from config import Config
 
 # Configure logging at the start of your file
 logging.basicConfig(
     #filename='mcp_server.log',
     #filemode='w',  # 'w' means write/overwrite (instead of 'a' for append)
     level=logging.DEBUG,
-    format='%(asctime)s - %(levelname)s - %(message)s',
+    format='%(asctime)s - %(levelname)s - %(funcName)20s() %(message)s',
         handlers=[
         logging.FileHandler('mcp_server.log', mode='w'),
         logging.StreamHandler(sys.stdout)
@@ -166,6 +167,7 @@ def fibonacci_numbers(n: int) -> list:
         fib_sequence.append(fib_sequence[-1] + fib_sequence[-2])
     return fib_sequence[:n]
 
+
 @mcp.tool()
 async def open_paint() -> dict:
     """Open Microsoft Paint Canvas ready for drawing maximized on primary monitor with initialization verification"""
@@ -191,6 +193,11 @@ async def open_paint() -> dict:
         
         if not paint_window or not paint_window.exists():
             raise Exception("Failed to initialize Paint window")
+        
+        # Ensure window is active and visible
+        if not paint_window.has_focus():
+            paint_window.set_focus()
+            time.sleep(0.5)
             
         logging.info("Paint window found, verifying UI elements...")
         
@@ -200,8 +207,10 @@ async def open_paint() -> dict:
         while retry_count < max_retries:
             try:
                 canvas = paint_window.child_window(class_name='MSPaintView')
+                time.sleep(0.5)
                 if canvas.exists() and canvas.is_visible():
                     logging.info("Canvas element found and verified")
+                    logging.info(f"Canvas dimensions: {canvas.rectangle()}")
                     break
             except Exception as e:
                 logging.info(f"Attempt {retry_count + 1}: Waiting for canvas to initialize...")
@@ -218,7 +227,7 @@ async def open_paint() -> dict:
         
         logging.info(f"\n{'='*20} Display Configuration {'='*20}")
         logging.info(f"Total number of monitors: {monitor_count}")
-        logging.info(f"Primary Monitor Resolution: {primary_width}x{primary_height}")
+        #logging.info(f"Primary Monitor Resolution: {primary_width}x{primary_height}")
         
         # Position window
         if monitor_count > 1:
@@ -237,7 +246,7 @@ async def open_paint() -> dict:
         # Maximize and verify window state
         win32gui.ShowWindow(paint_window.handle, win32con.SW_MAXIMIZE)
         time.sleep(0.5)
-        
+
         # Verify window is maximized
         retry_count = 0
         while retry_count < max_retries:
@@ -286,8 +295,40 @@ async def open_paint() -> dict:
         }
 
 @mcp.tool()
+async def get_canvas_resolution() -> dict:
+    """Get the resolution of the Microsoft Paint canvas with proper verification"""
+    try:
+        # Get monitor information
+        monitor_count = win32api.GetSystemMetrics(win32con.SM_CMONITORS)
+        primary_width = win32api.GetSystemMetrics(win32con.SM_CXSCREEN)
+        primary_height = win32api.GetSystemMetrics(win32con.SM_CYSCREEN)
+        
+        logging.info(f"\n{'='*20} Display Configuration {'='*20}")
+        logging.info(f"Total number of monitors: {monitor_count}")
+        logging.info(f"Primary Monitor Resolution: {primary_width}x{primary_height}")
+        
+        return {
+            "content": [
+                TextContent(
+                    type="text",
+                    text=f"Canvas resolution: Width={primary_width}, Height={primary_height}"
+                )
+            ]
+        }
+    except Exception as e:
+        logging.error(f"Error getting canvas resolution: {str(e)}")
+        return {
+            "content": [
+                TextContent(
+                    type="text",
+                    text=f"Error getting canvas resolution: {str(e)}"
+                )
+            ]
+        }   
+
+@mcp.tool()
 async def draw_rectangle(x1: int, y1: int, x2: int, y2: int) -> dict:
-    """Draw a rectangle in Microsoft Paint Canvas from (x1,y1) to (x2,y2)"""
+    """Draw a black rectangle in Microsoft Paint Canvas from (x1,y1) to (x2,y2)"""
     global paint_app
     try:
         if not paint_app:
@@ -301,16 +342,6 @@ async def draw_rectangle(x1: int, y1: int, x2: int, y2: int) -> dict:
             }
         
         logging.info(f"Starting rectangle drawing operation from ({x1},{y1}) to ({x2},{y2})")
-
-        temp_x1 = x1
-        temp_y1 = y1
-        temp_x2 = x2
-        temp_y2 = y2
-
-        x1 = 780
-        y1 = 380
-        x2 = 1130
-        y2 = 700
         
         # Get the Paint window
         paint_window = paint_app.window(class_name='MSPaintApp')
@@ -328,61 +359,42 @@ async def draw_rectangle(x1: int, y1: int, x2: int, y2: int) -> dict:
         # Calculate toolbar position (relative to window)
         toolbar_x = 532  # Default x coordinate for rectangle tool
         toolbar_y = 82   # Default y coordinate for rectangle tool
+
+        if Config.LAPTOP_MONITOR == True:
+            toolbar_x = 805
+            toolbar_y = 130
         
         logging.info(f"Clicking rectangle tool at ({toolbar_x}, {toolbar_y})")
         paint_window.click_input(coords=(toolbar_x, toolbar_y))
-        time.sleep(1)  # Wait for tool selection
+        time.sleep(0.5)  # Wait for tool selection
         
         # Get the canvas area
         canvas = paint_window.child_window(class_name='MSPaintView')
-        
-        # Get canvas position relative to screen
-        canvas_rect = canvas.rectangle()
-        logging.info(f"Canvas rectangle: {canvas_rect}")
-        
-        # Calculate canvas offsets
-        canvas_x_offset = canvas_rect.left - window_rect[0]
-        canvas_y_offset = canvas_rect.top - window_rect[1]
-        logging.info(f"Canvas offsets: x={canvas_x_offset}, y={canvas_y_offset}")
-        
-        # Adjust coordinates to be relative to canvas
-        start_x = x1 + canvas_x_offset
-        start_y = y1 + canvas_y_offset
-        end_x = x2 + canvas_x_offset
-        end_y = y2 + canvas_y_offset
-        
-        logging.info(f"Adjusted coordinates: from ({start_x},{start_y}) to ({end_x},{end_y})")
-        
         # Try drawing with mouse input
         try:
             # Move to start position first
-            canvas.click_input(coords=(start_x, start_y))
-            time.sleep(0.5)
-            
+            canvas.click_input(coords=(x1, y1))
+            time.sleep(0.2)
+      
             # Draw the rectangle
-            canvas.press_mouse_input(coords=(start_x, start_y))
-            time.sleep(0.5)
-            canvas.move_mouse_input(coords=(end_x, end_y))
-            time.sleep(0.5)
-            canvas.release_mouse_input(coords=(end_x, end_y))
-            time.sleep(0.5)
-            
+            canvas.press_mouse_input(coords=(x1, y1))
+            time.sleep(0.2)
+            canvas.move_mouse_input(coords=(x2, y2))
+            time.sleep(0.2)
+            canvas.release_mouse_input(coords=(x2, y2))
+            time.sleep(0.2)
+          
             logging.info("Rectangle drawing completed")
             
         except Exception as e:
             logging.error(f"Failed to draw rectangle: {str(e)}")
             raise
         
-        x1 = temp_x1
-        y1 = temp_y1
-        x2 = temp_x2
-        y2 = temp_y2
-        
         return {
             "content": [
                 TextContent(
                     type="text",
-                    text=f"Rectangle drawn on Microsoft Paint Canvas from ({x1},{y1}) to ({x2},{y2})"
+                    text=f"Black Rectangle drawn on Microsoft Paint Canvas from ({x1},{y1}) to ({x2},{y2})"
                 )
             ]
         }
@@ -392,7 +404,7 @@ async def draw_rectangle(x1: int, y1: int, x2: int, y2: int) -> dict:
             "content": [
                 TextContent(
                     type="text",
-                    text=f"Error drawing rectangle on Microsoft Paint Canvas: {str(e)}"
+                    text=f"Error drawing black rectangle on Microsoft Paint Canvas: {str(e)}"
                 )
             ]
         }
@@ -415,19 +427,21 @@ async def add_text_in_paint(text: str, x: int, y: int, width: int = 200, height:
                 ]
             }
         
-        logging.info(f"Starting text addition operation: '{text}' at ({x}, {y})")
+        logging.info(f"Expected: Starting text addition operation: '{text}' at ({x}, {y}) with box size ({width}, {height})")
 
 
-        temp_x = x
-        temp_y = y
-        temp_width = width
-        temp_height = height
+        #temp_x = x
+        #temp_y = y
+        #temp_width = width
+        #temp_height = height
 
-        x = 780
-        y = 380
-        width = 200
-        height = 100
-        
+        #x = 780
+        #y = 380
+        #width = 200
+        #height = 100
+
+        logging.info(f"Actual: Starting text addition operation: '{text}' at ({x}, {y}) with box size ({width}, {height})")
+  
         # Get the Paint window
         paint_window = paint_app.window(class_name='MSPaintApp')
         
@@ -442,18 +456,6 @@ async def add_text_in_paint(text: str, x: int, y: int, width: int = 200, height:
         
         # Get the canvas area
         canvas = paint_window.child_window(class_name='MSPaintView')
-        canvas_rect = canvas.rectangle()
-        logging.info(f"Canvas rectangle: {canvas_rect}")
-        
-        # Calculate canvas offsets
-        canvas_x_offset = canvas_rect.left - window_rect[0]
-        canvas_y_offset = canvas_rect.top - window_rect[1]
-        logging.info(f"Canvas offsets: x={canvas_x_offset}, y={canvas_y_offset}")
-        
-        # Adjust coordinates to be relative to canvas
-        adjusted_x = x + canvas_x_offset
-        adjusted_y = y + canvas_y_offset
-        logging.info(f"Adjusted coordinates: ({adjusted_x}, {adjusted_y})")
         
         # First, switch to selection tool to ensure we're not in any other mode
         logging.info("Switching to selection tool")
@@ -474,19 +476,19 @@ async def add_text_in_paint(text: str, x: int, y: int, width: int = 200, height:
         logging.info("Creating text box")
         
         # Click and drag to create text box
-        canvas.press_mouse_input(coords=(adjusted_x, adjusted_y))
+        canvas.press_mouse_input(coords=(x, y))
         time.sleep(0.5)
         
         # Drag to create text box of specified size
-        canvas.move_mouse_input(coords=(adjusted_x + width, adjusted_y + height))
+        canvas.move_mouse_input(coords=(x + width, y + height))
         time.sleep(0.5)
         
-        canvas.release_mouse_input(coords=(adjusted_x + width, adjusted_y + height))
+        canvas.release_mouse_input(coords=(x + width, y + height))
         time.sleep(1)
         
         # Click inside the text box to ensure it's selected
-        click_x = adjusted_x + (width // 2)  # Click in the middle of the box
-        click_y = adjusted_y + (height // 2)
+        click_x = x + (width // 2)  # Click in the middle of the box
+        click_y = y + (height // 2)
         canvas.click_input(coords=(click_x, click_y))
         time.sleep(0.5)
         
@@ -517,10 +519,10 @@ async def add_text_in_paint(text: str, x: int, y: int, width: int = 200, height:
         
         logging.info("Text addition completed")
 
-        x = temp_x
-        y = temp_y
-        width = temp_width
-        height = temp_height
+        #x = temp_x
+        #y = temp_y
+        #width = temp_width
+        #height = temp_height
         
         return {
             "content": [
