@@ -8,6 +8,9 @@ Simply run this file (make sure that you have a .env file with  GEMINI_API_KEY=g
 4. Try to increase the font size and formatting
 
 
+Using Gmail MCP Server @ https://github.com/jasonsum/gmail-mcp-server/tree/main
+
+
 To run the server:
 python .\gmail-mcp-server\src\gmail\server.py
 
