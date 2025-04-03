@@ -295,13 +295,23 @@ async def open_paint() -> dict:
         }
 
 @mcp.tool()
-async def get_canvas_resolution() -> dict:
-    """Get the resolution of the Microsoft Paint canvas with proper verification"""
+async def get_screen_canvas_dimensions() -> dict:
+    """Get the resolution of the screen and the dimensions of the Microsoft Paint Canvas with proper verification"""
     try:
         # Get monitor information
         monitor_count = win32api.GetSystemMetrics(win32con.SM_CMONITORS)
         primary_width = win32api.GetSystemMetrics(win32con.SM_CXSCREEN)
         primary_height = win32api.GetSystemMetrics(win32con.SM_CYSCREEN)
+
+        canvas_width = Config.PAINT_CANVAS_WIDTH
+        canvas_height = Config.PAINT_CANVAS_HEIGHT
+
+        if Config.LAPTOP_MONITOR == True:
+            canvas_x = Config.LAPTOP_MONITOR_CANVAS_X_POS
+            canvas_y = Config.LAPTOP_MONITOR_CANVAS_Y_POS
+        else:
+            canvas_x = Config.DESKTOP_MONITOR_CANVAS_X_POS
+            canvas_y = Config.DESKTOP_MONITOR_CANVAS_Y_POS
         
         logging.info(f"\n{'='*20} Display Configuration {'='*20}")
         logging.info(f"Total number of monitors: {monitor_count}")
@@ -311,7 +321,7 @@ async def get_canvas_resolution() -> dict:
             "content": [
                 TextContent(
                     type="text",
-                    text=f"Canvas resolution: Width={primary_width}, Height={primary_height}"
+                    text=f"Screen resolution: Width={primary_width}, Height={primary_height}, Microsoft Paint Canvas available for drawing is a rectangle with width={canvas_width} and height={canvas_height} positioned at {canvas_x, canvas_y}"
                 )
             ]
         }
@@ -357,12 +367,15 @@ async def draw_rectangle(x1: int, y1: int, x2: int, y2: int) -> dict:
         logging.info(f"Paint window rectangle: {window_rect}")
         
         # Calculate toolbar position (relative to window)
-        toolbar_x = 532  # Default x coordinate for rectangle tool
-        toolbar_y = 82   # Default y coordinate for rectangle tool
+        #toolbar_x = 532  # Default x coordinate for rectangle tool
+        #toolbar_y = 82   # Default y coordinate for rectangle tool
 
         if Config.LAPTOP_MONITOR == True:
-            toolbar_x = 805
-            toolbar_y = 130
+            toolbar_x = Config.LAPTOP_MONITOR_TOOLBAR_RECTANGLE_X_POS
+            toolbar_y = Config.LAPTOP_MONITOR_TOOLBAR_RECTANGLE_Y_POS
+        else:
+            toolbar_x = Config.DESKTOP_MONITOR_TOOLBAR_RECTANGLE_X_POS
+            toolbar_y = Config.DESKTOP_MONITOR_TOOLBAR_RECTANGLE_Y_POS
         
         logging.info(f"Clicking rectangle tool at ({toolbar_x}, {toolbar_y})")
         paint_window.click_input(coords=(toolbar_x, toolbar_y))
@@ -510,7 +523,7 @@ async def add_text_in_paint(text: str, x: int, y: int, width: int = 200, height:
             time.sleep(0.1)
         
         # Finalize the text by clicking outside
-        canvas.click_input(coords=(50, 50))
+        canvas.click_input(coords=(500, 500))
         time.sleep(0.5)
         
         # Switch back to selection tool

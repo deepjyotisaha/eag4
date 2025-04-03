@@ -7,9 +7,16 @@ class Config:
     MODEL_NAME = 'gemini-2.0-flash'
     LOG_LEVEL = 'DEBUG'
     LAPTOP_MONITOR = False
-    LAPTOP_MONITOR_X_PADDING = 576
-    LAPTOP_MONITOR_Y_PADDING = 584
-    #EMAIL = 'deepjyoti.saha@gmail.com'
+    DESKTOP_MONITOR_CANVAS_X_POS = 452
+    DESKTOP_MONITOR_CANVAS_Y_POS = 277
+    LAPTOP_MONITOR_CANVAS_X_POS = 0
+    LAPTOP_MONITOR_CANVAS_Y_POS = 0
+    DESKTOP_MONITOR_TOOLBAR_RECTANGLE_X_POS = 532
+    DESKTOP_MONITOR_TOOLBAR_RECTANGLE_Y_POS = 82
+    LAPTOP_MONITOR_TOOLBAR_RECTANGLE_X_POS = 805
+    LAPTOP_MONITOR_TOOLBAR_RECTANGLE_Y_POS = 130
+    PAINT_CANVAS_WIDTH = 1030
+    PAINT_CANVAS_HEIGHT = 632
     #DESKTOP_MONITOR_RESOLUTION = (1920, 1080)
     #LAPTOP_MONITOR_RESOLUTION = (2496, 1664)
 
@@ -31,7 +38,8 @@ Important:
 - Only give FINAL_ANSWER when you have completed all necessary calculations
 - Do not repeat function calls with the same parameters at any cost
 - Only when you have computed the result of the mathematical problem, you start the process of displaying the result on a canvas
-- Make sure you draw the response in the center of the canvas and format the response in such a way that the result is contained in the center of the canvas within a boundary with 30px padding on all sides
+- Your co-ordinates for drawing the result on the canvas should be calculated based on the dimensions of the canvas and the screen resolution, but he parameters for tools should based passsed with respect to the screen resolution
+- Make sure you don't draw the result outside the rectangle, and the rectangle should be half of the canvas
 
 Examples:
 - FUNCTION_CALL: add|5|3
