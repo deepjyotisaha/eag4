@@ -6,3 +6,11 @@ Simply run this file (make sure that you have a .env file with  GEMINI_API_KEY=g
 2. Rectangle size is small
 3. Check pass the screen size and inform about the canvas size with draiwing instructions
 4. Try to increase the font size and formatting
+
+
+To run the server:
+python .\gmail-mcp-server\src\gmail\server.py
+
+
+To run in inspector:
+npx @modelcontextprotocol/inspector python gmail-mcp-server\\src\\gmail\\server.py --creds-file-path .google\\client_creds.json --token-path .google\\app_tokens.json
