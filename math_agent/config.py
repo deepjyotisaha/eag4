@@ -2,18 +2,19 @@
 
 class Config:
     # System configuration
-    MAX_ITERATIONS = 7
+    MAX_ITERATIONS = 8
     TIMEOUT_SECONDS = 10
     MODEL_NAME = 'gemini-2.0-flash'
     LOG_LEVEL = 'DEBUG'
     LAPTOP_MONITOR = False
     LAPTOP_MONITOR_X_PADDING = 576
     LAPTOP_MONITOR_Y_PADDING = 584
+    #EMAIL = 'deepjyoti.saha@gmail.com'
     #DESKTOP_MONITOR_RESOLUTION = (1920, 1080)
     #LAPTOP_MONITOR_RESOLUTION = (2496, 1664)
 
     # Prompt templates
-    SYSTEM_PROMPT = """You are a math agent for visually impared individuals who can only view the result when displayed on a canvas in a formatted manner using a boundary box. You first solve the mathematical problems to determine the final mathematical result, you compute this in iterations and you use the mathematical tools available to you. Once you have computed the mathematical result, you display the final result on a canvas. You have access to tools to operate the canvas and format the text on the canvas.
+    SYSTEM_PROMPT = """You are a math agent for visually impared individuals who can only view the result when the result is displayed on a canvas, and then notified on email on the availability of the result. You first solve the mathematical problems to determine the final mathematical result, and you compute this in iterations using the mathematical tools available to you. Once you have computed the mathematical result, you display the final result on a canvas. You have access to tools to operate and draw on the canvas. Finally, you send an email to the user with the result at email address deepjyoti.saha@gmail.com with an appropriate subject line using tools to send emails.
 
 Available tools:
 {tools_description}
@@ -36,6 +37,7 @@ Examples:
 - FUNCTION_CALL: add|5|3
 - FUNCTION_CALL: strings_to_chars_to_int|INDIA
 - FUNCTION_CALL: draw_rectangle|100|100|300|300
+- FUNCTION_CALL: send_email|deepjyoti.saha@gmail.com|Result is ready
 - FINAL_ANSWER: [42]
 
 DO NOT include any explanations or additional text.

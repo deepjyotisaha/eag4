@@ -1,186 +1,208 @@
-2025-04-03 20:24:03,810 - INFO -             <module>() Configuring Gemini API...
-2025-04-03 20:24:03,811 - INFO -             <module>() Gemini API configured successfully
-2025-04-03 20:24:03,811 - DEBUG -             __init__() Using proactor: IocpProactor
-2025-04-03 20:24:03,812 - INFO -                 main() Starting main execution...
-2025-04-03 20:24:03,813 - INFO -                 main() Establishing connection to MCP server...
-2025-04-03 20:24:03,840 - INFO -                 main() Connection established, creating session...
-2025-04-03 20:24:03,841 - INFO -                 main() Session created, initializing...
-2025-04-03 20:24:05,456 - INFO -                 main() Requesting tool list...
-2025-04-03 20:24:05,464 - INFO -                 main() Math server tools: 23
-2025-04-03 20:24:05,465 - INFO -                 main() Successfully retrieved 23 math tools
-2025-04-03 20:24:05,469 - INFO -                 main() Gmail server tools: 6
-2025-04-03 20:24:05,470 - INFO -                 main() Successfully retrieved 6 gmail tools
-2025-04-03 20:24:05,470 - INFO -                 main() Combined tools: 29
-2025-04-03 20:24:05,471 - INFO -                 main() Creating system prompt...
-2025-04-03 20:24:05,471 - INFO -                 main() Number of tools: 29
-2025-04-03 20:24:05,471 - INFO -                 main() Added description for tool: 1. add(a: integer, b: integer) - Add two numbers
-2025-04-03 20:24:05,472 - INFO -                 main() Added description for tool: 2. add_list(l: array) - Add all numbers in a list
-2025-04-03 20:24:05,472 - INFO -                 main() Added description for tool: 3. subtract(a: integer, b: integer) - Subtract two numbers
-2025-04-03 20:24:05,472 - INFO -                 main() Added description for tool: 4. multiply(a: integer, b: integer) - Multiply two numbers
-2025-04-03 20:24:05,473 - INFO -                 main() Added description for tool: 5. divide(a: integer, b: integer) - Divide two numbers
-2025-04-03 20:24:05,473 - INFO -                 main() Added description for tool: 6. power(a: integer, b: integer) - Power of two numbers
-2025-04-03 20:24:05,474 - INFO -                 main() Added description for tool: 7. sqrt(a: integer) - Square root of a number
-2025-04-03 20:24:05,474 - INFO -                 main() Added description for tool: 8. cbrt(a: integer) - Cube root of a number
-2025-04-03 20:24:05,475 - INFO -                 main() Added description for tool: 9. factorial(a: integer) - factorial of a number
-2025-04-03 20:24:05,476 - INFO -                 main() Added description for tool: 10. log(a: integer) - log of a number
-2025-04-03 20:24:05,476 - INFO -                 main() Added description for tool: 11. remainder(a: integer, b: integer) - remainder of two numbers divison
-2025-04-03 20:24:05,476 - INFO -                 main() Added description for tool: 12. sin(a: integer) - sin of a number
-2025-04-03 20:24:05,476 - INFO -                 main() Added description for tool: 13. cos(a: integer) - cos of a number
-2025-04-03 20:24:05,477 - INFO -                 main() Added description for tool: 14. tan(a: integer) - tan of a number
-2025-04-03 20:24:05,477 - INFO -                 main() Added description for tool: 15. mine(a: integer, b: integer) - special mining tool
-2025-04-03 20:24:05,477 - INFO -                 main() Added description for tool: 16. create_thumbnail(image_path: string) - Create a thumbnail from an image
-2025-04-03 20:24:05,478 - INFO -                 main() Added description for tool: 17. strings_to_chars_to_int(string: string) - Return the ASCII values of the characters in a word
-2025-04-03 20:24:05,478 - INFO -                 main() Added description for tool: 18. int_list_to_exponential_sum(int_list: array) - Return sum of exponentials of numbers in a list
-2025-04-03 20:24:05,478 - INFO -                 main() Added description for tool: 19. fibonacci_numbers(n: integer) - Return the first n Fibonacci Numbers
-2025-04-03 20:24:05,478 - INFO -                 main() Added description for tool: 20. open_paint() - Open Microsoft Paint Canvas ready for drawing maximized on primary monitor with initialization verification
-2025-04-03 20:24:05,479 - INFO -                 main() Added description for tool: 21. get_canvas_resolution() - Get the resolution of the Microsoft Paint canvas with proper verification
-2025-04-03 20:24:05,480 - INFO -                 main() Added description for tool: 22. draw_rectangle(x1: integer, y1: integer, x2: integer, y2: integer) - Draw a black rectangle in Microsoft Paint Canvas from (x1,y1) to (x2,y2)
-2025-04-03 20:24:05,480 - INFO -                 main() Added description for tool: 23. add_text_in_paint(text: string, x: integer, y: integer, width: integer, height: integer) - 
+2025-04-03 20:43:05,094 - INFO -             <module>() Configuring Gemini API...
+2025-04-03 20:43:05,094 - INFO -             <module>() Gemini API configured successfully
+2025-04-03 20:43:05,094 - DEBUG -             __init__() Using proactor: IocpProactor
+2025-04-03 20:43:05,095 - INFO -                 main() Starting main execution...
+2025-04-03 20:43:05,095 - INFO -                 main() Establishing connection to MCP server...
+2025-04-03 20:43:05,126 - INFO -                 main() Connection established, creating session...
+2025-04-03 20:43:05,126 - INFO -                 main() Session created, initializing...
+2025-04-03 20:43:06,907 - INFO -                 main() Requesting tool list...
+2025-04-03 20:43:06,915 - INFO -                 main() Math server tools: 23
+2025-04-03 20:43:06,915 - INFO -                 main() Successfully retrieved 23 math tools
+2025-04-03 20:43:06,919 - INFO -                 main() Gmail server tools: 6
+2025-04-03 20:43:06,919 - INFO -                 main() Successfully retrieved 6 gmail tools
+2025-04-03 20:43:06,919 - INFO -                 main() Combined tools: 29
+2025-04-03 20:43:06,920 - INFO -                 main() Creating system prompt...
+2025-04-03 20:43:06,920 - INFO -                 main() Number of tools: 29
+2025-04-03 20:43:06,920 - INFO -                 main() Added description for tool: 1. add(a: integer, b: integer) - Add two numbers
+2025-04-03 20:43:06,920 - INFO -                 main() Added description for tool: 2. add_list(l: array) - Add all numbers in a list
+2025-04-03 20:43:06,921 - INFO -                 main() Added description for tool: 3. subtract(a: integer, b: integer) - Subtract two numbers
+2025-04-03 20:43:06,921 - INFO -                 main() Added description for tool: 4. multiply(a: integer, b: integer) - Multiply two numbers
+2025-04-03 20:43:06,921 - INFO -                 main() Added description for tool: 5. divide(a: integer, b: integer) - Divide two numbers
+2025-04-03 20:43:06,921 - INFO -                 main() Added description for tool: 6. power(a: integer, b: integer) - Power of two numbers
+2025-04-03 20:43:06,921 - INFO -                 main() Added description for tool: 7. sqrt(a: integer) - Square root of a number
+2025-04-03 20:43:06,922 - INFO -                 main() Added description for tool: 8. cbrt(a: integer) - Cube root of a number
+2025-04-03 20:43:06,922 - INFO -                 main() Added description for tool: 9. factorial(a: integer) - factorial of a number
+2025-04-03 20:43:06,922 - INFO -                 main() Added description for tool: 10. log(a: integer) - log of a number
+2025-04-03 20:43:06,923 - INFO -                 main() Added description for tool: 11. remainder(a: integer, b: integer) - remainder of two numbers divison
+2025-04-03 20:43:06,923 - INFO -                 main() Added description for tool: 12. sin(a: integer) - sin of a number
+2025-04-03 20:43:06,924 - INFO -                 main() Added description for tool: 13. cos(a: integer) - cos of a number
+2025-04-03 20:43:06,924 - INFO -                 main() Added description for tool: 14. tan(a: integer) - tan of a number
+2025-04-03 20:43:06,924 - INFO -                 main() Added description for tool: 15. mine(a: integer, b: integer) - special mining tool
+2025-04-03 20:43:06,925 - INFO -                 main() Added description for tool: 16. create_thumbnail(image_path: string) - Create a thumbnail from an image
+2025-04-03 20:43:06,925 - INFO -                 main() Added description for tool: 17. strings_to_chars_to_int(string: string) - Return the ASCII values of the characters in a word
+2025-04-03 20:43:06,926 - INFO -                 main() Added description for tool: 18. int_list_to_exponential_sum(int_list: array) - Return sum of exponentials of numbers in a list
+2025-04-03 20:43:06,926 - INFO -                 main() Added description for tool: 19. fibonacci_numbers(n: integer) - Return the first n Fibonacci Numbers
+2025-04-03 20:43:06,926 - INFO -                 main() Added description for tool: 20. open_paint() - Open Microsoft Paint Canvas ready for drawing maximized on primary monitor with initialization verification
+2025-04-03 20:43:06,927 - INFO -                 main() Added description for tool: 21. get_canvas_resolution() - Get the resolution of the Microsoft Paint canvas with proper verification
+2025-04-03 20:43:06,927 - INFO -                 main() Added description for tool: 22. draw_rectangle(x1: integer, y1: integer, x2: integer, y2: integer) - Draw a black rectangle in Microsoft Paint Canvas from (x1,y1) to (x2,y2)
+2025-04-03 20:43:06,927 - INFO -                 main() Added description for tool: 23. add_text_in_paint(text: string, x: integer, y: integer, width: integer, height: integer) - 
 Draw text in Microsoft Paint Canvas at specified coordinates starting from (x,y) within the box of size (width, height)
 
 
-2025-04-03 20:24:05,480 - INFO -                 main() Added description for tool: 24. send-email(recipient_id: string, subject: string, message: string) - Sends email to recipient. 
+2025-04-03 20:43:06,928 - INFO -                 main() Added description for tool: 24. send-email(recipient_id: string, subject: string, message: string) - Sends email to recipient. 
                 Do not use if user only asked to draft email. 
                 Drafts must be approved before sending.
-2025-04-03 20:24:05,481 - INFO -                 main() Added description for tool: 25. trash-email(email_id: string) - Moves email to trash. 
+2025-04-03 20:43:06,928 - INFO -                 main() Added description for tool: 25. trash-email(email_id: string) - Moves email to trash. 
                 Confirm before moving email to trash.
-2025-04-03 20:24:05,481 - INFO -                 main() Added description for tool: 26. get-unread-emails() - Retrieve unread emails
-2025-04-03 20:24:05,482 - INFO -                 main() Added description for tool: 27. read-email(email_id: string) - Retrieves given email content
-2025-04-03 20:24:05,482 - INFO -                 main() Added description for tool: 28. mark-email-as-read(email_id: string) - Marks given email as read
-2025-04-03 20:24:05,482 - INFO -                 main() Added description for tool: 29. open-email(email_id: string) - Open email in browser
-2025-04-03 20:24:05,483 - INFO -                 main() Successfully created tools description
-2025-04-03 20:24:05,483 - INFO -                 main() Created system prompt...
-2025-04-03 20:24:05,484 - INFO -                 main() Starting iteration loop...
-2025-04-03 20:24:05,484 - INFO -                 main() 
+2025-04-03 20:43:06,928 - INFO -                 main() Added description for tool: 26. get-unread-emails() - Retrieve unread emails
+2025-04-03 20:43:06,929 - INFO -                 main() Added description for tool: 27. read-email(email_id: string) - Retrieves given email content
+2025-04-03 20:43:06,929 - INFO -                 main() Added description for tool: 28. mark-email-as-read(email_id: string) - Marks given email as read
+2025-04-03 20:43:06,929 - INFO -                 main() Added description for tool: 29. open-email(email_id: string) - Open email in browser
+2025-04-03 20:43:06,930 - INFO -                 main() Successfully created tools description
+2025-04-03 20:43:06,930 - INFO -                 main() Created system prompt...
+2025-04-03 20:43:06,931 - INFO -                 main() Starting iteration loop...
+2025-04-03 20:43:06,931 - INFO -                 main() 
 --- Iteration 1 ---
-2025-04-03 20:24:05,484 - INFO -                 main() Preparing to generate LLM response...
-2025-04-03 20:24:05,485 - INFO - generate_with_timeout() Starting LLM generation...
-2025-04-03 20:24:07,429 - INFO - generate_with_timeout() LLM generation completed
-2025-04-03 20:24:07,429 - INFO -                 main() LLM Response: FUNCTION_CALL: strings_to_chars_to_int|INDIA
-2025-04-03 20:24:07,430 - INFO -                 main() 
+2025-04-03 20:43:06,932 - INFO -                 main() Preparing to generate LLM response...
+2025-04-03 20:43:06,932 - INFO - generate_with_timeout() Starting LLM generation...
+2025-04-03 20:43:07,898 - INFO - generate_with_timeout() LLM generation completed
+2025-04-03 20:43:07,898 - INFO -                 main() LLM Response: FUNCTION_CALL: strings_to_chars_to_int|INDIA
+2025-04-03 20:43:07,899 - INFO -                 main() 
 DEBUG: Raw function info:  strings_to_chars_to_int|INDIA
-2025-04-03 20:24:07,430 - INFO -                 main() DEBUG: Split parts: ['strings_to_chars_to_int', 'INDIA']
-2025-04-03 20:24:07,430 - INFO -                 main() DEBUG: Function name: strings_to_chars_to_int
-2025-04-03 20:24:07,431 - INFO -                 main() DEBUG: Raw parameters: ['INDIA']
-2025-04-03 20:24:07,431 - INFO -                 main() DEBUG: Found tool: strings_to_chars_to_int
-2025-04-03 20:24:07,431 - INFO -                 main() DEBUG: Tool schema: {'properties': {'string': {'title': 'String', 'type': 'string'}}, 'required': ['string'], 'title': 'strings_to_chars_to_intArguments', 'type': 'object'}
-2025-04-03 20:24:07,431 - INFO -                 main() DEBUG: Schema properties: {'string': {'title': 'String', 'type': 'string'}}
-2025-04-03 20:24:07,432 - INFO -                 main() DEBUG: Converting parameter string with value INDIA to type string
-2025-04-03 20:24:07,432 - INFO -                 main() DEBUG: Final arguments: {'string': 'INDIA'}
-2025-04-03 20:24:07,432 - INFO -                 main() DEBUG: Calling tool strings_to_chars_to_int
-2025-04-03 20:24:07,436 - INFO -                 main() DEBUG: Raw result: meta=None content=[TextContent(type='text', text='73', annotations=None), TextContent(type='text', text='78', annotations=None), TextContent(type='text', text='68', annotations=None), TextContent(type='text', text='73', annotations=None), TextContent(type='text', text='65', annotations=None)] isError=False
-2025-04-03 20:24:07,437 - INFO -                 main() DEBUG: Result has content attribute
-2025-04-03 20:24:07,437 - INFO -                 main() DEBUG: Final iteration result: ['73', '78', '68', '73', '65']
-2025-04-03 20:24:07,437 - INFO -                 main() 
+2025-04-03 20:43:07,899 - INFO -                 main() DEBUG: Split parts: ['strings_to_chars_to_int', 'INDIA']
+2025-04-03 20:43:07,900 - INFO -                 main() DEBUG: Function name: strings_to_chars_to_int
+2025-04-03 20:43:07,900 - INFO -                 main() DEBUG: Raw parameters: ['INDIA']
+2025-04-03 20:43:07,901 - INFO -                 main() DEBUG: Found tool: strings_to_chars_to_int
+2025-04-03 20:43:07,901 - INFO -                 main() DEBUG: Tool schema: {'properties': {'string': {'title': 'String', 'type': 'string'}}, 'required': ['string'], 'title': 'strings_to_chars_to_intArguments', 'type': 'object'}
+2025-04-03 20:43:07,902 - INFO -                 main() DEBUG: Schema properties: {'string': {'title': 'String', 'type': 'string'}}
+2025-04-03 20:43:07,902 - INFO -                 main() DEBUG: Converting parameter string with value INDIA to type string
+2025-04-03 20:43:07,903 - INFO -                 main() DEBUG: Final arguments: {'string': 'INDIA'}
+2025-04-03 20:43:07,903 - INFO -                 main() DEBUG: Calling tool strings_to_chars_to_int
+2025-04-03 20:43:07,909 - INFO -                 main() DEBUG: Raw result: meta=None content=[TextContent(type='text', text='73', annotations=None), TextContent(type='text', text='78', annotations=None), TextContent(type='text', text='68', annotations=None), TextContent(type='text', text='73', annotations=None), TextContent(type='text', text='65', annotations=None)] isError=False
+2025-04-03 20:43:07,910 - INFO -                 main() DEBUG: Result has content attribute
+2025-04-03 20:43:07,910 - INFO -                 main() DEBUG: Final iteration result: ['73', '78', '68', '73', '65']
+2025-04-03 20:43:07,910 - INFO -                 main() 
 --- Iteration 2 ---
-2025-04-03 20:24:07,437 - INFO -                 main() Preparing to generate LLM response...
-2025-04-03 20:24:07,438 - INFO - generate_with_timeout() Starting LLM generation...
-2025-04-03 20:24:08,167 - INFO - generate_with_timeout() LLM generation completed
-2025-04-03 20:24:08,168 - INFO -                 main() LLM Response: FUNCTION_CALL: int_list_to_exponential_sum|[73, 78, 68, 73, 65]
-2025-04-03 20:24:08,168 - INFO -                 main() 
-DEBUG: Raw function info:  int_list_to_exponential_sum|[73, 78, 68, 73, 65]
-2025-04-03 20:24:08,168 - INFO -                 main() DEBUG: Split parts: ['int_list_to_exponential_sum', '[73, 78, 68, 73, 65]']
-2025-04-03 20:24:08,169 - INFO -                 main() DEBUG: Function name: int_list_to_exponential_sum
-2025-04-03 20:24:08,169 - INFO -                 main() DEBUG: Raw parameters: ['[73, 78, 68, 73, 65]']
-2025-04-03 20:24:08,170 - INFO -                 main() DEBUG: Found tool: int_list_to_exponential_sum
-2025-04-03 20:24:08,170 - INFO -                 main() DEBUG: Tool schema: {'properties': {'int_list': {'items': {}, 'title': 'Int List', 'type': 'array'}}, 'required': ['int_list'], 'title': 'int_list_to_exponential_sumArguments', 'type': 'object'}
-2025-04-03 20:24:08,171 - INFO -                 main() DEBUG: Schema properties: {'int_list': {'items': {}, 'title': 'Int List', 'type': 'array'}}
-2025-04-03 20:24:08,171 - INFO -                 main() DEBUG: Converting parameter int_list with value [73, 78, 68, 73, 65] to type array
-2025-04-03 20:24:08,171 - INFO -                 main() DEBUG: Final arguments: {'int_list': [73, 78, 68, 73, 65]}
-2025-04-03 20:24:08,172 - INFO -                 main() DEBUG: Calling tool int_list_to_exponential_sum
-2025-04-03 20:24:08,177 - INFO -                 main() DEBUG: Raw result: meta=None content=[TextContent(type='text', text='7.59982224609308e+33', annotations=None)] isError=False
-2025-04-03 20:24:08,177 - INFO -                 main() DEBUG: Result has content attribute
-2025-04-03 20:24:08,177 - INFO -                 main() DEBUG: Final iteration result: ['7.59982224609308e+33']
-2025-04-03 20:24:08,178 - INFO -                 main() 
+2025-04-03 20:43:07,911 - INFO -                 main() Preparing to generate LLM response...
+2025-04-03 20:43:07,911 - INFO - generate_with_timeout() Starting LLM generation...
+2025-04-03 20:43:09,190 - INFO - generate_with_timeout() LLM generation completed
+2025-04-03 20:43:09,191 - INFO -                 main() LLM Response: FUNCTION_CALL: int_list_to_exponential_sum|73,78,68,73,65
+2025-04-03 20:43:09,191 - INFO -                 main() 
+DEBUG: Raw function info:  int_list_to_exponential_sum|73,78,68,73,65
+2025-04-03 20:43:09,192 - INFO -                 main() DEBUG: Split parts: ['int_list_to_exponential_sum', '73,78,68,73,65']
+2025-04-03 20:43:09,192 - INFO -                 main() DEBUG: Function name: int_list_to_exponential_sum
+2025-04-03 20:43:09,193 - INFO -                 main() DEBUG: Raw parameters: ['73,78,68,73,65']
+2025-04-03 20:43:09,194 - INFO -                 main() DEBUG: Found tool: int_list_to_exponential_sum
+2025-04-03 20:43:09,194 - INFO -                 main() DEBUG: Tool schema: {'properties': {'int_list': {'items': {}, 'title': 'Int List', 'type': 'array'}}, 'required': ['int_list'], 'title': 'int_list_to_exponential_sumArguments', 'type': 'object'}
+2025-04-03 20:43:09,195 - INFO -                 main() DEBUG: Schema properties: {'int_list': {'items': {}, 'title': 'Int List', 'type': 'array'}}
+2025-04-03 20:43:09,195 - INFO -                 main() DEBUG: Converting parameter int_list with value 73,78,68,73,65 to type array
+2025-04-03 20:43:09,195 - INFO -                 main() DEBUG: Final arguments: {'int_list': [73, 78, 68, 73, 65]}
+2025-04-03 20:43:09,196 - INFO -                 main() DEBUG: Calling tool int_list_to_exponential_sum
+2025-04-03 20:43:09,200 - INFO -                 main() DEBUG: Raw result: meta=None content=[TextContent(type='text', text='7.59982224609308e+33', annotations=None)] isError=False
+2025-04-03 20:43:09,201 - INFO -                 main() DEBUG: Result has content attribute
+2025-04-03 20:43:09,201 - INFO -                 main() DEBUG: Final iteration result: ['7.59982224609308e+33']
+2025-04-03 20:43:09,201 - INFO -                 main() 
 --- Iteration 3 ---
-2025-04-03 20:24:08,178 - INFO -                 main() Preparing to generate LLM response...
-2025-04-03 20:24:08,179 - INFO - generate_with_timeout() Starting LLM generation...
-2025-04-03 20:24:09,187 - INFO - generate_with_timeout() LLM generation completed
-2025-04-03 20:24:09,188 - INFO -                 main() LLM Response: FUNCTION_CALL: open_paint
-2025-04-03 20:24:09,189 - INFO -                 main() 
+2025-04-03 20:43:09,202 - INFO -                 main() Preparing to generate LLM response...
+2025-04-03 20:43:09,202 - INFO - generate_with_timeout() Starting LLM generation...
+2025-04-03 20:43:09,873 - INFO - generate_with_timeout() LLM generation completed
+2025-04-03 20:43:09,874 - INFO -                 main() LLM Response: FUNCTION_CALL: open_paint
+2025-04-03 20:43:09,875 - INFO -                 main() 
 DEBUG: Raw function info:  open_paint
-2025-04-03 20:24:09,189 - INFO -                 main() DEBUG: Split parts: ['open_paint']
-2025-04-03 20:24:09,190 - INFO -                 main() DEBUG: Function name: open_paint
-2025-04-03 20:24:09,190 - INFO -                 main() DEBUG: Raw parameters: []
-2025-04-03 20:24:09,191 - INFO -                 main() DEBUG: Found tool: open_paint
-2025-04-03 20:24:09,191 - INFO -                 main() DEBUG: Tool schema: {'properties': {}, 'title': 'open_paintArguments', 'type': 'object'}
-2025-04-03 20:24:09,191 - INFO -                 main() DEBUG: Schema properties: {}
-2025-04-03 20:24:09,192 - INFO -                 main() DEBUG: Final arguments: {}
-2025-04-03 20:24:09,193 - INFO -                 main() DEBUG: Calling tool open_paint
-2025-04-03 20:24:12,506 - INFO -                 main() DEBUG: Raw result: meta=None content=[TextContent(type='text', text='{"content": [{"type": "text", "text": "Microsoft Paint Canvas opened and ready for drawing. All UI elements accessible. Detected 1 monitor(s).", "annotations": null}]}', annotations=None)] isError=False
-2025-04-03 20:24:12,506 - INFO -                 main() DEBUG: Result has content attribute
-2025-04-03 20:24:12,506 - INFO -                 main() DEBUG: Final iteration result: ['{"content": [{"type": "text", "text": "Microsoft Paint Canvas opened and ready for drawing. All UI elements accessible. Detected 1 monitor(s).", "annotations": null}]}']
-2025-04-03 20:24:12,506 - INFO -                 main() 
+2025-04-03 20:43:09,875 - INFO -                 main() DEBUG: Split parts: ['open_paint']
+2025-04-03 20:43:09,876 - INFO -                 main() DEBUG: Function name: open_paint
+2025-04-03 20:43:09,876 - INFO -                 main() DEBUG: Raw parameters: []
+2025-04-03 20:43:09,877 - INFO -                 main() DEBUG: Found tool: open_paint
+2025-04-03 20:43:09,877 - INFO -                 main() DEBUG: Tool schema: {'properties': {}, 'title': 'open_paintArguments', 'type': 'object'}
+2025-04-03 20:43:09,878 - INFO -                 main() DEBUG: Schema properties: {}
+2025-04-03 20:43:09,878 - INFO -                 main() DEBUG: Final arguments: {}
+2025-04-03 20:43:09,879 - INFO -                 main() DEBUG: Calling tool open_paint
+2025-04-03 20:43:13,989 - INFO -                 main() DEBUG: Raw result: meta=None content=[TextContent(type='text', text='{"content": [{"type": "text", "text": "Microsoft Paint Canvas opened and ready for drawing. All UI elements accessible. Detected 1 monitor(s).", "annotations": null}]}', annotations=None)] isError=False
+2025-04-03 20:43:13,990 - INFO -                 main() DEBUG: Result has content attribute
+2025-04-03 20:43:13,990 - INFO -                 main() DEBUG: Final iteration result: ['{"content": [{"type": "text", "text": "Microsoft Paint Canvas opened and ready for drawing. All UI elements accessible. Detected 1 monitor(s).", "annotations": null}]}']
+2025-04-03 20:43:13,991 - INFO -                 main() 
 --- Iteration 4 ---
-2025-04-03 20:24:12,507 - INFO -                 main() Preparing to generate LLM response...
-2025-04-03 20:24:12,507 - INFO - generate_with_timeout() Starting LLM generation...
-2025-04-03 20:24:13,168 - INFO - generate_with_timeout() LLM generation completed
-2025-04-03 20:24:13,169 - INFO -                 main() LLM Response: FUNCTION_CALL: get_canvas_resolution|
-2025-04-03 20:24:13,169 - INFO -                 main() 
-DEBUG: Raw function info:  get_canvas_resolution|
-2025-04-03 20:24:13,170 - INFO -                 main() DEBUG: Split parts: ['get_canvas_resolution', '']
-2025-04-03 20:24:13,171 - INFO -                 main() DEBUG: Function name: get_canvas_resolution
-2025-04-03 20:24:13,171 - INFO -                 main() DEBUG: Raw parameters: ['']
-2025-04-03 20:24:13,172 - INFO -                 main() DEBUG: Found tool: get_canvas_resolution
-2025-04-03 20:24:13,172 - INFO -                 main() DEBUG: Tool schema: {'properties': {}, 'title': 'get_canvas_resolutionArguments', 'type': 'object'}
-2025-04-03 20:24:13,172 - INFO -                 main() DEBUG: Schema properties: {}
-2025-04-03 20:24:13,173 - INFO -                 main() DEBUG: Final arguments: {}
-2025-04-03 20:24:13,173 - INFO -                 main() DEBUG: Calling tool get_canvas_resolution
-2025-04-03 20:24:13,178 - INFO -                 main() DEBUG: Raw result: meta=None content=[TextContent(type='text', text='{"content": [{"type": "text", "text": "Canvas resolution: Width=1920, Height=1080", "annotations": null}]}', annotations=None)] isError=False
-2025-04-03 20:24:13,178 - INFO -                 main() DEBUG: Result has content attribute
-2025-04-03 20:24:13,178 - INFO -                 main() DEBUG: Final iteration result: ['{"content": [{"type": "text", "text": "Canvas resolution: Width=1920, Height=1080", "annotations": null}]}']
-2025-04-03 20:24:13,179 - INFO -                 main() 
+2025-04-03 20:43:13,991 - INFO -                 main() Preparing to generate LLM response...
+2025-04-03 20:43:13,992 - INFO - generate_with_timeout() Starting LLM generation...
+2025-04-03 20:43:14,730 - INFO - generate_with_timeout() LLM generation completed
+2025-04-03 20:43:14,730 - INFO -                 main() LLM Response: FUNCTION_CALL: get_canvas_resolution
+2025-04-03 20:43:14,730 - INFO -                 main() 
+DEBUG: Raw function info:  get_canvas_resolution
+2025-04-03 20:43:14,731 - INFO -                 main() DEBUG: Split parts: ['get_canvas_resolution']
+2025-04-03 20:43:14,731 - INFO -                 main() DEBUG: Function name: get_canvas_resolution
+2025-04-03 20:43:14,731 - INFO -                 main() DEBUG: Raw parameters: []
+2025-04-03 20:43:14,732 - INFO -                 main() DEBUG: Found tool: get_canvas_resolution
+2025-04-03 20:43:14,732 - INFO -                 main() DEBUG: Tool schema: {'properties': {}, 'title': 'get_canvas_resolutionArguments', 'type': 'object'}
+2025-04-03 20:43:14,732 - INFO -                 main() DEBUG: Schema properties: {}
+2025-04-03 20:43:14,733 - INFO -                 main() DEBUG: Final arguments: {}
+2025-04-03 20:43:14,733 - INFO -                 main() DEBUG: Calling tool get_canvas_resolution
+2025-04-03 20:43:14,737 - INFO -                 main() DEBUG: Raw result: meta=None content=[TextContent(type='text', text='{"content": [{"type": "text", "text": "Canvas resolution: Width=1920, Height=1080", "annotations": null}]}', annotations=None)] isError=False
+2025-04-03 20:43:14,737 - INFO -                 main() DEBUG: Result has content attribute
+2025-04-03 20:43:14,737 - INFO -                 main() DEBUG: Final iteration result: ['{"content": [{"type": "text", "text": "Canvas resolution: Width=1920, Height=1080", "annotations": null}]}']
+2025-04-03 20:43:14,738 - INFO -                 main() 
 --- Iteration 5 ---
-2025-04-03 20:24:13,179 - INFO -                 main() Preparing to generate LLM response...
-2025-04-03 20:24:13,180 - INFO - generate_with_timeout() Starting LLM generation...
-2025-04-03 20:24:14,414 - INFO - generate_with_timeout() LLM generation completed
-2025-04-03 20:24:14,414 - INFO -                 main() LLM Response: FUNCTION_CALL: draw_rectangle|610|340|1310|740
-2025-04-03 20:24:14,414 - INFO -                 main() 
-DEBUG: Raw function info:  draw_rectangle|610|340|1310|740
-2025-04-03 20:24:14,415 - INFO -                 main() DEBUG: Split parts: ['draw_rectangle', '610', '340', '1310', '740']
-2025-04-03 20:24:14,415 - INFO -                 main() DEBUG: Function name: draw_rectangle
-2025-04-03 20:24:14,415 - INFO -                 main() DEBUG: Raw parameters: ['610', '340', '1310', '740']
-2025-04-03 20:24:14,416 - INFO -                 main() DEBUG: Found tool: draw_rectangle
-2025-04-03 20:24:14,416 - INFO -                 main() DEBUG: Tool schema: {'properties': {'x1': {'title': 'X1', 'type': 'integer'}, 'y1': {'title': 'Y1', 'type': 'integer'}, 'x2': {'title': 'X2', 'type': 'integer'}, 'y2': {'title': 'Y2', 'type': 'integer'}}, 'required': ['x1', 'y1', 'x2', 'y2'], 'title': 'draw_rectangleArguments', 'type': 'object'}
-2025-04-03 20:24:14,417 - INFO -                 main() DEBUG: Schema properties: {'x1': {'title': 'X1', 'type': 'integer'}, 'y1': {'title': 'Y1', 'type': 'integer'}, 'x2': {'title': 'X2', 'type': 'integer'}, 'y2': {'title': 'Y2', 'type': 'integer'}}
-2025-04-03 20:24:14,417 - INFO -                 main() DEBUG: Converting parameter x1 with value 610 to type integer
-2025-04-03 20:24:14,417 - INFO -                 main() DEBUG: Converting parameter y1 with value 340 to type integer
-2025-04-03 20:24:14,418 - INFO -                 main() DEBUG: Converting parameter x2 with value 1310 to type integer
-2025-04-03 20:24:14,418 - INFO -                 main() DEBUG: Converting parameter y2 with value 740 to type integer
-2025-04-03 20:24:14,419 - INFO -                 main() DEBUG: Final arguments: {'x1': 610, 'y1': 340, 'x2': 1310, 'y2': 740}
-2025-04-03 20:24:14,419 - INFO -                 main() DEBUG: Calling tool draw_rectangle
-2025-04-03 20:24:16,541 - INFO -                 main() DEBUG: Raw result: meta=None content=[TextContent(type='text', text='{"content": [{"type": "text", "text": "Black Rectangle drawn on Microsoft Paint Canvas from (610,340) to (1310,740)", "annotations": null}]}', annotations=None)] isError=False
-2025-04-03 20:24:16,542 - INFO -                 main() DEBUG: Result has content attribute
-2025-04-03 20:24:16,543 - INFO -                 main() DEBUG: Final iteration result: ['{"content": [{"type": "text", "text": "Black Rectangle drawn on Microsoft Paint Canvas from (610,340) to (1310,740)", "annotations": null}]}']
-2025-04-03 20:24:16,543 - INFO -                 main() 
+2025-04-03 20:43:14,738 - INFO -                 main() Preparing to generate LLM response...
+2025-04-03 20:43:14,738 - INFO - generate_with_timeout() Starting LLM generation...
+2025-04-03 20:43:16,085 - INFO - generate_with_timeout() LLM generation completed
+2025-04-03 20:43:16,086 - INFO -                 main() LLM Response: FUNCTION_CALL: draw_rectangle|566|240|1354|840
+2025-04-03 20:43:16,086 - INFO -                 main() 
+DEBUG: Raw function info:  draw_rectangle|566|240|1354|840
+2025-04-03 20:43:16,086 - INFO -                 main() DEBUG: Split parts: ['draw_rectangle', '566', '240', '1354', '840']
+2025-04-03 20:43:16,086 - INFO -                 main() DEBUG: Function name: draw_rectangle
+2025-04-03 20:43:16,086 - INFO -                 main() DEBUG: Raw parameters: ['566', '240', '1354', '840']
+2025-04-03 20:43:16,086 - INFO -                 main() DEBUG: Found tool: draw_rectangle
+2025-04-03 20:43:16,086 - INFO -                 main() DEBUG: Tool schema: {'properties': {'x1': {'title': 'X1', 'type': 'integer'}, 'y1': {'title': 'Y1', 'type': 'integer'}, 'x2': {'title': 'X2', 'type': 'integer'}, 'y2': {'title': 'Y2', 'type': 'integer'}}, 'required': ['x1', 'y1', 'x2', 'y2'], 'title': 'draw_rectangleArguments', 'type': 'object'}
+2025-04-03 20:43:16,087 - INFO -                 main() DEBUG: Schema properties: {'x1': {'title': 'X1', 'type': 'integer'}, 'y1': {'title': 'Y1', 'type': 'integer'}, 'x2': {'title': 'X2', 'type': 'integer'}, 'y2': {'title': 'Y2', 'type': 'integer'}}
+2025-04-03 20:43:16,087 - INFO -                 main() DEBUG: Converting parameter x1 with value 566 to type integer
+2025-04-03 20:43:16,087 - INFO -                 main() DEBUG: Converting parameter y1 with value 240 to type integer
+2025-04-03 20:43:16,087 - INFO -                 main() DEBUG: Converting parameter x2 with value 1354 to type integer
+2025-04-03 20:43:16,087 - INFO -                 main() DEBUG: Converting parameter y2 with value 840 to type integer
+2025-04-03 20:43:16,087 - INFO -                 main() DEBUG: Final arguments: {'x1': 566, 'y1': 240, 'x2': 1354, 'y2': 840}
+2025-04-03 20:43:16,087 - INFO -                 main() DEBUG: Calling tool draw_rectangle
+2025-04-03 20:43:18,216 - INFO -                 main() DEBUG: Raw result: meta=None content=[TextContent(type='text', text='{"content": [{"type": "text", "text": "Black Rectangle drawn on Microsoft Paint Canvas from (566,240) to (1354,840)", "annotations": null}]}', annotations=None)] isError=False
+2025-04-03 20:43:18,216 - INFO -                 main() DEBUG: Result has content attribute
+2025-04-03 20:43:18,217 - INFO -                 main() DEBUG: Final iteration result: ['{"content": [{"type": "text", "text": "Black Rectangle drawn on Microsoft Paint Canvas from (566,240) to (1354,840)", "annotations": null}]}']
+2025-04-03 20:43:18,217 - INFO -                 main() 
 --- Iteration 6 ---
-2025-04-03 20:24:16,544 - INFO -                 main() Preparing to generate LLM response...
-2025-04-03 20:24:16,545 - INFO - generate_with_timeout() Starting LLM generation...
-2025-04-03 20:24:17,422 - INFO - generate_with_timeout() LLM generation completed
-2025-04-03 20:24:17,423 - INFO -                 main() LLM Response: FUNCTION_CALL: add_text_in_paint|7.59982224609308e+33|640|370|640|370
-2025-04-03 20:24:17,424 - INFO -                 main() 
-DEBUG: Raw function info:  add_text_in_paint|7.59982224609308e+33|640|370|640|370
-2025-04-03 20:24:17,424 - INFO -                 main() DEBUG: Split parts: ['add_text_in_paint', '7.59982224609308e+33', '640', '370', '640', '370']
-2025-04-03 20:24:17,425 - INFO -                 main() DEBUG: Function name: add_text_in_paint
-2025-04-03 20:24:17,426 - INFO -                 main() DEBUG: Raw parameters: ['7.59982224609308e+33', '640', '370', '640', '370']
-2025-04-03 20:24:17,426 - INFO -                 main() DEBUG: Found tool: add_text_in_paint
-2025-04-03 20:24:17,426 - INFO -                 main() DEBUG: Tool schema: {'properties': {'text': {'title': 'Text', 'type': 'string'}, 'x': {'title': 'X', 'type': 'integer'}, 'y': {'title': 'Y', 'type': 'integer'}, 'width': {'default': 200, 'title': 'Width', 'type': 'integer'}, 'height': {'default': 100, 'title': 'Height', 'type': 'integer'}}, 'required': ['text', 'x', 'y'], 'title': 'add_text_in_paintArguments', 'type': 'object'}
-2025-04-03 20:24:17,427 - INFO -                 main() DEBUG: Schema properties: {'text': {'title': 'Text', 'type': 'string'}, 'x': {'title': 'X', 'type': 'integer'}, 'y': {'title': 'Y', 'type': 'integer'}, 'width': {'default': 200, 'title': 'Width', 'type': 'integer'}, 'height': {'default': 100, 'title': 'Height', 'type': 'integer'}}
-2025-04-03 20:24:17,427 - INFO -                 main() DEBUG: Converting parameter text with value 7.59982224609308e+33 to type string
-2025-04-03 20:24:17,427 - INFO -                 main() DEBUG: Converting parameter x with value 640 to type integer
-2025-04-03 20:24:17,428 - INFO -                 main() DEBUG: Converting parameter y with value 370 to type integer
-2025-04-03 20:24:17,428 - INFO -                 main() DEBUG: Converting parameter width with value 640 to type integer
-2025-04-03 20:24:17,429 - INFO -                 main() DEBUG: Converting parameter height with value 370 to type integer
-2025-04-03 20:24:17,429 - INFO -                 main() DEBUG: Final arguments: {'text': '7.59982224609308e+33', 'x': 640, 'y': 370, 'width': 640, 'height': 370}
-2025-04-03 20:24:17,429 - INFO -                 main() DEBUG: Calling tool add_text_in_paint
-2025-04-03 20:24:27,457 - INFO -                 main() DEBUG: Raw result: meta=None content=[TextContent(type='text', text='{"content": [{"type": "text", "text": "Text \'7.59982224609308e+33\' added successfully at (640, 370) on Microsoft Paint Canvas", "annotations": null}]}', annotations=None)] isError=False
-2025-04-03 20:24:27,457 - INFO -                 main() DEBUG: Result has content attribute
-2025-04-03 20:24:27,458 - INFO -                 main() DEBUG: Final iteration result: ['{"content": [{"type": "text", "text": "Text \'7.59982224609308e+33\' added successfully at (640, 370) on Microsoft Paint Canvas", "annotations": null}]}']
-2025-04-03 20:24:27,458 - INFO -                 main() 
+2025-04-03 20:43:18,218 - INFO -                 main() Preparing to generate LLM response...
+2025-04-03 20:43:18,218 - INFO - generate_with_timeout() Starting LLM generation...
+2025-04-03 20:43:19,171 - INFO - generate_with_timeout() LLM generation completed
+2025-04-03 20:43:19,172 - INFO -                 main() LLM Response: FUNCTION_CALL: add_text_in_paint|7.59982224609308e+33|596|270|758|570
+2025-04-03 20:43:19,172 - INFO -                 main() 
+DEBUG: Raw function info:  add_text_in_paint|7.59982224609308e+33|596|270|758|570
+2025-04-03 20:43:19,172 - INFO -                 main() DEBUG: Split parts: ['add_text_in_paint', '7.59982224609308e+33', '596', '270', '758', '570']
+2025-04-03 20:43:19,172 - INFO -                 main() DEBUG: Function name: add_text_in_paint
+2025-04-03 20:43:19,173 - INFO -                 main() DEBUG: Raw parameters: ['7.59982224609308e+33', '596', '270', '758', '570']
+2025-04-03 20:43:19,173 - INFO -                 main() DEBUG: Found tool: add_text_in_paint
+2025-04-03 20:43:19,173 - INFO -                 main() DEBUG: Tool schema: {'properties': {'text': {'title': 'Text', 'type': 'string'}, 'x': {'title': 'X', 'type': 'integer'}, 'y': {'title': 'Y', 'type': 'integer'}, 'width': {'default': 200, 'title': 'Width', 'type': 'integer'}, 'height': {'default': 100, 'title': 'Height', 'type': 'integer'}}, 'required': ['text', 'x', 'y'], 'title': 'add_text_in_paintArguments', 'type': 'object'}
+2025-04-03 20:43:19,173 - INFO -                 main() DEBUG: Schema properties: {'text': {'title': 'Text', 'type': 'string'}, 'x': {'title': 'X', 'type': 'integer'}, 'y': {'title': 'Y', 'type': 'integer'}, 'width': {'default': 200, 'title': 'Width', 'type': 'integer'}, 'height': {'default': 100, 'title': 'Height', 'type': 'integer'}}
+2025-04-03 20:43:19,174 - INFO -                 main() DEBUG: Converting parameter text with value 7.59982224609308e+33 to type string
+2025-04-03 20:43:19,174 - INFO -                 main() DEBUG: Converting parameter x with value 596 to type integer
+2025-04-03 20:43:19,174 - INFO -                 main() DEBUG: Converting parameter y with value 270 to type integer
+2025-04-03 20:43:19,174 - INFO -                 main() DEBUG: Converting parameter width with value 758 to type integer
+2025-04-03 20:43:19,174 - INFO -                 main() DEBUG: Converting parameter height with value 570 to type integer
+2025-04-03 20:43:19,175 - INFO -                 main() DEBUG: Final arguments: {'text': '7.59982224609308e+33', 'x': 596, 'y': 270, 'width': 758, 'height': 570}
+2025-04-03 20:43:19,175 - INFO -                 main() DEBUG: Calling tool add_text_in_paint
+2025-04-03 20:43:29,244 - INFO -                 main() DEBUG: Raw result: meta=None content=[TextContent(type='text', text='{"content": [{"type": "text", "text": "Text \'7.59982224609308e+33\' added successfully at (596, 270) on Microsoft Paint Canvas", "annotations": null}]}', annotations=None)] isError=False
+2025-04-03 20:43:29,244 - INFO -                 main() DEBUG: Result has content attribute
+2025-04-03 20:43:29,245 - INFO -                 main() DEBUG: Final iteration result: ['{"content": [{"type": "text", "text": "Text \'7.59982224609308e+33\' added successfully at (596, 270) on Microsoft Paint Canvas", "annotations": null}]}']
+2025-04-03 20:43:29,245 - INFO -                 main() 
 --- Iteration 7 ---
-2025-04-03 20:24:27,459 - INFO -                 main() Preparing to generate LLM response...
-2025-04-03 20:24:27,460 - INFO - generate_with_timeout() Starting LLM generation...
-2025-04-03 20:24:28,202 - INFO - generate_with_timeout() LLM generation completed
-2025-04-03 20:24:28,203 - INFO -                 main() LLM Response: FINAL_ANSWER: [7.59982224609308e+33]
-2025-04-03 20:24:28,203 - INFO -                 main() 
+2025-04-03 20:43:29,246 - INFO -                 main() Preparing to generate LLM response...
+2025-04-03 20:43:29,246 - INFO - generate_with_timeout() Starting LLM generation...
+2025-04-03 20:43:30,162 - INFO - generate_with_timeout() LLM generation completed
+2025-04-03 20:43:30,163 - INFO -                 main() LLM Response: FUNCTION_CALL: send-email|deepjyoti.saha@gmail.com|Result is ready|7.59982224609308e+33
+2025-04-03 20:43:30,164 - INFO -                 main() 
+DEBUG: Raw function info:  send-email|deepjyoti.saha@gmail.com|Result is ready|7.59982224609308e+33
+2025-04-03 20:43:30,164 - INFO -                 main() DEBUG: Split parts: ['send-email', 'deepjyoti.saha@gmail.com', 'Result is ready', '7.59982224609308e+33']
+2025-04-03 20:43:30,165 - INFO -                 main() DEBUG: Function name: send-email
+2025-04-03 20:43:30,165 - INFO -                 main() DEBUG: Raw parameters: ['deepjyoti.saha@gmail.com', 'Result is ready', '7.59982224609308e+33']
+2025-04-03 20:43:30,165 - INFO -                 main() DEBUG: Found tool: send-email
+2025-04-03 20:43:30,165 - INFO -                 main() DEBUG: Tool schema: {'type': 'object', 'properties': {'recipient_id': {'type': 'string', 'description': 'Recipient email address'}, 'subject': {'type': 'string', 'description': 'Email subject'}, 'message': {'type': 'string', 'description': 'Email content text'}}, 'required': ['recipient_id', 'subject', 'message']}
+2025-04-03 20:43:30,166 - INFO -                 main() DEBUG: Schema properties: {'recipient_id': {'type': 'string', 'description': 'Recipient email address'}, 'subject': {'type': 'string', 'description': 'Email subject'}, 'message': {'type': 'string', 'description': 'Email content text'}}
+2025-04-03 20:43:30,166 - INFO -                 main() DEBUG: Converting parameter recipient_id with value deepjyoti.saha@gmail.com to type string
+2025-04-03 20:43:30,166 - INFO -                 main() DEBUG: Converting parameter subject with value Result is ready to type string
+2025-04-03 20:43:30,167 - INFO -                 main() DEBUG: Converting parameter message with value 7.59982224609308e+33 to type string
+2025-04-03 20:43:30,167 - INFO -                 main() DEBUG: Final arguments: {'recipient_id': 'deepjyoti.saha@gmail.com', 'subject': 'Result is ready', 'message': '7.59982224609308e+33'}
+2025-04-03 20:43:30,167 - INFO -                 main() DEBUG: Calling tool send-email
+2025-04-03 20:43:30,720 - INFO -                 main() DEBUG: Raw result: meta=None content=[TextContent(type='text', text='Email sent successfully. Message ID: 195fc36e2744fa6a', annotations=None)] isError=False
+2025-04-03 20:43:30,720 - INFO -                 main() DEBUG: Result has content attribute
+2025-04-03 20:43:30,721 - INFO -                 main() DEBUG: Final iteration result: ['Email sent successfully. Message ID: 195fc36e2744fa6a']
+2025-04-03 20:43:30,721 - INFO -                 main() 
+--- Iteration 8 ---
+2025-04-03 20:43:30,722 - INFO -                 main() Preparing to generate LLM response...
+2025-04-03 20:43:30,722 - INFO - generate_with_timeout() Starting LLM generation...
+2025-04-03 20:43:31,548 - INFO - generate_with_timeout() LLM generation completed
+2025-04-03 20:43:31,549 - INFO -                 main() LLM Response: FINAL_ANSWER: [7.59982224609308e+33]
+2025-04-03 20:43:31,549 - INFO -                 main() 
 === Agent Execution Complete ===
