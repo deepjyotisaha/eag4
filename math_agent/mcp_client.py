@@ -17,7 +17,7 @@ logging.basicConfig(
     #filename='mcp_client.log',
     #filemode='a',  # append mode
     level=logging.DEBUG,
-    format='%(asctime)s - %(levelname)s - %(message)s',
+    format='%(asctime)s - %(levelname)s - %(funcName)20s() %(message)s',
     handlers=[
         logging.FileHandler('mcp_client.log', mode='w'),
         logging.StreamHandler(sys.stdout)
@@ -77,29 +77,346 @@ def reset_state():
     iteration = 0
     iteration_response = []
 
+'''
+async def init_gmail_server():
+    logging.info("Starting Gmail server initialization...")
+    gmail_server_params = StdioServerParameters(
+        command="python",
+        args=[
+            "gmail-mcp-server/src/gmail/server.py",
+            "--creds-file-path=.google/client_creds.json",
+            "--token-path=.google/app_tokens.json"
+        ]
+    )
+    try:
+        logging.info("Creating Gmail server connection...")
+        async with stdio_client(gmail_server_params) as (gmail_read, gmail_write):
+            logging.info("Gmail server connection established, creating session...")
+            async with ClientSession(gmail_read, gmail_write) as gmail_session:
+                logging.info("Initializing Gmail session...")
+                await gmail_session.initialize()
+                logging.info("Getting Gmail tools...")
+                tools_result = await gmail_session.list_tools()
+                gmail_tools = tools_result.tools
+                logging.info(f"Gmail server tools: {len(gmail_tools)}")
+                for tool in gmail_tools:
+                    tool.server_session = gmail_session
+                return gmail_tools, gmail_session
+    except Exception as e:
+        logging.error(f"Error in Gmail server initialization: {str(e)}")
+        logging.error("Stack trace:", exc_info=True)
+        raise
+
+async def init_math_server():
+    logging.info("Starting math server initialization...")
+    math_server_params = StdioServerParameters(
+        command="python",
+        args=["mcp_server.py"]  # Remove "stdio" argument - it's handled internally
+    )
+    try:
+        logging.info("Creating math server connection...")
+        async with stdio_client(math_server_params) as (math_read, math_write):
+            logging.info("Math server connection established, creating session...")
+            async with ClientSession(math_read, math_write) as math_session:
+                logging.info("Initializing math session...")
+                await math_session.initialize()
+                logging.info("Getting math tools...")
+                tools_result = await math_session.list_tools()
+                math_tools = tools_result.tools
+                logging.info(f"Math server tools: {len(math_tools)}")
+                for tool in math_tools:
+                    tool.server_session = math_session
+                return math_tools, math_session
+    except Exception as e:
+        logging.error(f"Error in math server initialization: {str(e)}")
+        logging.error("Stack trace:", exc_info=True)
+        raise
+
+async def initialize_servers():
+    """Initialize both MCP and Gmail servers and combine their tools"""
+    logging.info("Initializing both servers...")
+    try:
+        # Initialize both servers
+        math_tools, math_session = await init_math_server()
+        logging.info("Math server initialized successfully")
+        
+        gmail_tools, gmail_session = await init_gmail_server()
+        logging.info("Gmail server initialized successfully")
+        
+        # Combine tools (extend the list instead of adding sessions)
+        combined_tools = []
+        combined_tools.extend(math_tools)
+        combined_tools.extend(gmail_tools)
+        
+        logging.info(f"Combined tools: {len(combined_tools)}")
+        
+        return combined_tools, math_session, gmail_session
+    except Exception as e:
+        logging.error(f"Error in server initialization: {str(e)}")
+        logging.error("Stack trace:", exc_info=True)
+        raise
+
+async def main():
+    reset_state()
+    logging.info("Starting main execution with multiple servers...")
+    
+    math_session = None
+    gmail_session = None
+    
+    try:
+        # Initialize servers
+        tools, math_session, gmail_session = await initialize_servers()
+
+        try:
+            # Create tools description
+            tools_description = []
+            for i, tool in enumerate(tools):
+                try:
+                    params = tool.inputSchema
+                    desc = getattr(tool, 'description', 'No description available')
+                    name = getattr(tool, 'name', f'tool_{i}')
+                
+                    if 'properties' in params:
+                        param_details = []
+                        for param_name, param_info in params['properties'].items():
+                            param_type = param_info.get('type', 'unknown')
+                            param_details.append(f"{param_name}: {param_type}")
+                            params_str = ', '.join(param_details)
+                    else:
+                        params_str = 'no parameters'
+
+                    tool_desc = f"{i+1}. {name}({params_str}) - {desc}"
+                    tools_description.append(tool_desc)
+                
+                except Exception as e:
+                    logging.error(f"Error processing tool {i}: {e}")
+                    tools_description.append(f"{i+1}. Error processing tool")
+        
+            tools_description = "\n".join(tools_description)
+        
+        except Exception as e:
+            logging.error(f"Error creating tools description: {e}")
+
+        logging.info(f"Number of tools: {len(tools)}")
+        logging.info(f"Tools description: {tools_description}")
+        logging.info(f"Successfully retrieved {len(tools)} tools")
+
+        logging.info("Created system prompt...")
+                
+        system_prompt = Config.SYSTEM_PROMPT.format(tools_description=tools_description)
+        query = Config.DEFAULT_QUERIES["ascii_sum"]
+
+        logging.info("Starting iteration loop...")
+        logging.debug(f"Query: {query}")
+        logging.debug(f"System prompt: {system_prompt}")
+                
+        # Use global iteration variables
+        global iteration, last_response
+                
+        while iteration < max_iterations:
+            logging.info(f"\n--- Iteration {iteration + 1} ---")
+            if last_response is None:
+                current_query = query
+            else:
+                current_query = current_query + "\n\n" + " ".join(iteration_response)
+                current_query = current_query + "  What should I do next?"
+
+            # Get model's response with timeout
+            logging.info("Preparing to generate LLM response...")
+            prompt = f"{system_prompt}\n\nQuery: {current_query}"
+            #logging.debug(f"Prompt: {prompt}")
+            try:
+                response = await generate_with_timeout(prompt)
+                response_text = response.text.strip()
+                logging.info(f"LLM Response: {response_text}")
+                        
+                # Find the FUNCTION_CALL line in the response
+                for line in response_text.split('\n'):
+                    line = line.strip()
+                    if line.startswith("FUNCTION_CALL:"):
+                        response_text = line
+                        break
+                        
+            except Exception as e:
+                    logging.error(f"Failed to get LLM response: {e}")
+                    break
+
+
+            if response_text.startswith("FUNCTION_CALL:"):
+                _, function_info = response_text.split(":", 1)
+                parts = [p.strip() for p in function_info.split("|")]
+                func_name, params = parts[0], parts[1:]
+                        
+                logging.info(f"\nDEBUG: Raw function info: {function_info}")
+                logging.info(f"DEBUG: Split parts: {parts}")
+                logging.info(f"DEBUG: Function name: {func_name}")
+                logging.info(f"DEBUG: Raw parameters: {params}")
+                        
+                try:
+                    # Find the matching tool to get its input schema
+                    tool = next((t for t in tools if t.name == func_name), None)
+                    if not tool:
+                        logging.info(f"DEBUG: Available tools: {[t.name for t in tools]}")
+                        raise ValueError(f"Unknown tool: {func_name}")
+
+                    logging.info(f"DEBUG: Found tool: {tool.name}")
+                    logging.info(f"DEBUG: Tool schema: {tool.inputSchema}")
+
+                    # Get the correct session from the tool
+                    session = tool.server_session
+                    if not session:
+                        raise ValueError(f"No session found for tool: {func_name}")
+
+                    # Prepare arguments according to the tool's input schema
+                    arguments = {}
+                    schema_properties = tool.inputSchema.get('properties', {})
+                    logging.info(f"DEBUG: Schema properties: {schema_properties}")
+                    logging.info(f"DEBUG: Server Session: {session}")
+
+                    for param_name, param_info in schema_properties.items():
+                        if not params:  # Check if we have enough parameters
+                            raise ValueError(f"Not enough parameters provided for {func_name}")
+                            
+                        value = params.pop(0)  # Get and remove the first parameter
+                        param_type = param_info.get('type', 'string')
+                        
+                        logging.info(f"DEBUG: Converting parameter {param_name} with value {value} to type {param_type}")
+                        
+                        # Convert the value to the correct type based on the schema
+                        if param_type == 'integer':
+                            arguments[param_name] = int(value)
+                        elif param_type == 'number':
+                            arguments[param_name] = float(value)
+                        elif param_type == 'array':
+                            # Handle array input
+                            if isinstance(value, str):
+                                value = value.strip('[]').split(',')
+                            arguments[param_name] = [int(x.strip()) for x in value]
+                        else:
+                            arguments[param_name] = str(value)
+
+                    logging.info(f"DEBUG: Final arguments: {arguments}")
+                    logging.info(f"DEBUG: Calling tool {func_name}")
+                    
+                    result = await session.call_tool(func_name, arguments=arguments)
+                    logging.info(f"DEBUG: Raw result: {result}")
+                    
+                    # Get the full result content
+                    if hasattr(result, 'content'):
+                        logging.info(f"DEBUG: Result has content attribute")
+                        # Handle multiple content items
+                        if isinstance(result.content, list):
+                            iteration_result = [
+                                item.text if hasattr(item, 'text') else str(item)
+                                for item in result.content
+                            ]
+                        else:
+                            iteration_result = str(result.content)
+                    else:
+                        logging.info(f"DEBUG: Result has no content attribute")
+                        iteration_result = str(result)
+                        
+                    logging.info(f"DEBUG: Final iteration result: {iteration_result}")
+                    
+                    # Format the response based on result type
+                    if isinstance(iteration_result, list):
+                        result_str = f"[{', '.join(iteration_result)}]"
+                    else:
+                        result_str = str(iteration_result)
+                    
+                    iteration_response.append(
+                        f"In the {iteration + 1} iteration you called {func_name} with {arguments} parameters, "
+                        f"and the function returned {result_str}."
+                    )
+                    last_response = iteration_result
+
+                except Exception as e:
+                    logging.error(f"DEBUG: Error details: {str(e)}")
+                    logging.error(f"DEBUG: Error type: {type(e)}")
+                    import traceback
+                    traceback.print_exc()
+                    iteration_response.append(f"Error in iteration {iteration + 1}: {str(e)}")
+                    break
+
+                if response_text.startswith("FINAL_ANSWER:"):
+                    logging.info("\n=== Agent Execution Complete ===")
+
+                iteration += 1
+
+    except Exception as e:
+        logging.error(f"Error in main execution: {e}")
+        import traceback
+        traceback.print_exc()
+    finally:
+        # Ensure proper cleanup
+        if math_session:
+            try:
+                await math_session.close()
+            except Exception as e:
+                logging.error(f"Error closing math session: {e}")
+        
+        if gmail_session:
+            try:
+                await gmail_session.close()
+            except Exception as e:
+                logging.error(f"Error closing gmail session: {e}")
+        reset_state()  # Reset at the end of main
+'''
+
 async def main():
     reset_state()  # Reset at the start of main
     logging.info("Starting main execution...")
     try:
         # Create a single MCP server connection
         logging.info("Establishing connection to MCP server...")
-        server_params = StdioServerParameters(
+        
+        math_server_params = StdioServerParameters(
             command="python",
             args=["mcp_server.py"]
         )
 
-        async with stdio_client(server_params) as (read, write):
+        gmail_server_params = StdioServerParameters(
+            command="python",
+            args=[
+                "gmail-mcp-server/src/gmail/server.py",
+                "--creds-file-path=.google/client_creds.json",
+                "--token-path=.google/app_tokens.json"
+            ]
+        )
+
+        async with stdio_client(math_server_params) as (math_read, math_write), \
+            stdio_client(gmail_server_params) as (gmail_read, gmail_write):
             logging.info("Connection established, creating session...")
-            async with ClientSession(read, write) as session:
+            async with ClientSession(math_read, math_write) as math_session, \
+                ClientSession(gmail_read, gmail_write) as gmail_session:
                 logging.info("Session created, initializing...")
-                await session.initialize()
+                await math_session.initialize()
+                await gmail_session.initialize()
                 
                 # Get available tools
                 logging.info("Requesting tool list...")
-                tools_result = await session.list_tools()
-                tools = tools_result.tools
-                logging.info(f"Successfully retrieved {len(tools)} tools")
+                tools_result = await math_session.list_tools()
+                math_tools = tools_result.tools
+                logging.info(f"Math server tools: {len(math_tools)}")
+                for tool in math_tools:
+                    tool.server_session = math_session
+                logging.info(f"Successfully retrieved {len(math_tools)} math tools")
+              
 
+                tools_result = await gmail_session.list_tools()
+                gmail_tools = tools_result.tools
+                logging.info(f"Gmail server tools: {len(gmail_tools)}")
+                for tool in gmail_tools:
+                    tool.server_session = gmail_session
+                logging.info(f"Successfully retrieved {len(gmail_tools)} gmail tools")
+
+                # Combine tools (extend the list instead of adding sessions)
+                tools = math_tools + gmail_tools
+                #tools.extend(math_tools)
+                #tools.extend(gmail_tools)
+        
+                logging.info(f"Combined tools: {len(tools)}")
+               
                 # Create system prompt with available tools
                 logging.info("Creating system prompt...")
                 logging.info(f"Number of tools: {len(tools)}")
@@ -202,6 +519,11 @@ async def main():
                             logging.info(f"DEBUG: Found tool: {tool.name}")
                             logging.info(f"DEBUG: Tool schema: {tool.inputSchema}")
 
+                            # Get the correct session from the tool
+                            session = tool.server_session
+                            if not session:
+                                raise ValueError(f"No session found for tool: {func_name}")
+
                             # Prepare arguments according to the tool's input schema
                             arguments = {}
                             schema_properties = tool.inputSchema.get('properties', {})
@@ -232,6 +554,7 @@ async def main():
                             logging.info(f"DEBUG: Final arguments: {arguments}")
                             logging.info(f"DEBUG: Calling tool {func_name}")
                             
+                            #result = await tools.server_session.call_tool(func_name, arguments=arguments)
                             result = await session.call_tool(func_name, arguments=arguments)
                             logging.info(f"DEBUG: Raw result: {result}")
                             
@@ -274,39 +597,7 @@ async def main():
 
                     elif response_text.startswith("FINAL_ANSWER:"):
                         logging.info("\n=== Agent Execution Complete ===")
-                        '''
-                        result = await session.call_tool("open_paint")
-                        logging.info(result.content[0].text)
 
-                        # Wait longer for Paint to be fully maximized
-                        await asyncio.sleep(1)
-
-                        # Draw a rectangle
-                        result = await session.call_tool(
-                            "draw_rectangle",
-                            arguments={
-                                "x1": 780,
-                                "y1": 380,
-                                "x2": 1140,
-                                "y2": 700
-                            }
-                        )
-                        logging.info(result.content[0].text)
-
-                        #Draw rectangle and add text
-                        result = await session.call_tool(
-                            "add_text_in_paint",
-                            arguments={
-                                "text": response_text,
-                                "text_x": 780,
-                                "text_y": 380,
-                                "width": 200,
-                                "height": 100   
-                            }
-                        )
-                        logging.info(result.content[0].text)
-                        break
-                        '''
                     iteration += 1
 
     except Exception as e:
@@ -315,6 +606,8 @@ async def main():
         traceback.print_exc()
     finally:
         reset_state()  # Reset at the end of main
+
+
 
 if __name__ == "__main__":
     asyncio.run(main())
